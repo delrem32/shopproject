@@ -1,0 +1,43 @@
+<div class="ui middle aligned selection divided list">
+  <ng-container *ngIf="cardsList$ |async as cards; else loading">
+    <div class="item" *ngFor="let card of cards">
+      <div class="ui grid">
+        <div class="fourteen wide column" [routerLink]="['/edit', card._id]">
+          <img class="ui tiny image left floated"
+               src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Icecat1-300x300.svg">
+          <div class="content">
+            <div class="header">
+              {{card.name}}
+            </div>
+            <div class="description" *ngIf="card.description">
+              {{card.description}}
+            </div>
+            <div class="metadata">
+              <br>
+              ID {{card._id}}
+            </div>
+          </div>
+        </div>
+        <div class="two wide column">
+          <button class="ui button red right floated"
+                  (click)="deleteCard(card._id)">DELETE
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <p *ngIf="!cards.length">
+      Es wurden noch keine Cards eingetragen.
+    </p>
+  </ng-container>
+  <ng-template #loading>
+    <div class="ui active dimmer">
+      <div class="ui large text loader">Daten werden geladen...</div>
+    </div>
+  </ng-template>
+</div>
+
+<button class="circular ui right floated icon button green big" routerLink="create">
+  <i class="icon plus"></i>
+</button>
+

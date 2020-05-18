@@ -1,0 +1,5 @@
+<div nz-row [nzGutter]="8" *ngIf="cardsList$|async as cards">
+  <app-card-item *ngFor="let card of cards" [card]="card"></app-card-item>
+</div>
+
+

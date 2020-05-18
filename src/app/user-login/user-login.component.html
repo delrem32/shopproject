@@ -1,0 +1,25 @@
+<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()" >
+  <nz-form-item *ngIf="!isLogged()">
+    <nz-form-control nzErrorTip="Please input your username!" [nzSpan]="24">
+      <nz-input-group nzPrefixIcon="user">
+        <input formControlName="email" nz-input placeholder="Username"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="!isLogged()">
+    <nz-form-control nzErrorTip="Please input your Password!" [nzSpan]="24">
+      <nz-input-group nzPrefixIcon="lock">
+        <input formControlName="password" nz-input type="password" placeholder="Password"/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <button nz-button
+              nzType="primary"
+              [disabled]="!validateForm.valid" *ngIf="!isLogged()">Log in
+      </button>
+      <button nz-button nzType="danger" (click)="logout()" *ngIf="isLogged()">Logout</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
