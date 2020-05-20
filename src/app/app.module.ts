@@ -26,6 +26,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { UserLoginComponent } from './user-login/user-login.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {JwtInterceptor} from './jwt.interceptor';
+import { UserRegistrationComponent } from './user-registration/user-registration.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {JwtInterceptor} from './jwt.interceptor';
     CardListComponent,
     CardDetailsComponent,
     CardItemComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    UserRegistrationComponent
   ],
   imports: [
     BrowserModule,
