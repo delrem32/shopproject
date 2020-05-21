@@ -10,6 +10,9 @@
         <ng-container *ngIf="control.hasError('required')">
           Please input your E-mail!
         </ng-container>
+        <ng-container *ngIf="control.hasError('incorrect')">
+          {{errorSubject.getValue()}}
+        </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>

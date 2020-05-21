@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
-import {Observable, Observer} from 'rxjs';
+import {BehaviorSubject, Observable, Observer} from 'rxjs';
 import {LoginService} from '../login.service';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {catchError, filter, pluck, share, tap} from 'rxjs/operators';
+import {error} from 'selenium-webdriver';
 
 @Component({
   selector: 'app-user-registration',
@@ -12,19 +14,32 @@ import {Router} from '@angular/router';
 })
 export class UserRegistrationComponent implements OnInit {
   validateForm: FormGroup;
+  errorSubject = new BehaviorSubject(null) as BehaviorSubject<string>;
 
   ngOnInit(): void {
   }
 
   submitForm(): void {
-    const email = this.validateForm.get('email').value;
+    /*const {email, password} = this.validateForm.get('email').value;
     const password = this.validateForm.get('password').value;
+    */
+    this.errorSubject.next(null);
+    const {email, password} = this.validateForm.getRawValue();
     for (const key in this.validateForm.controls) {
       this.validateForm.controls[key].markAsDirty();
       this.validateForm.controls[key].updateValueAndValidity();
     }
-    this.authService.register({email, password});
-    this.router.navigate(['/home']);
+    const [success$, error$] = this.authService.register({email, password});
+    success$.pipe(tap(() => this.router.navigate(['home'])),
+      tap(() => {
+        return this.errorSubject.next(null);
+      })).subscribe();
+    error$.pipe(share()).pipe(pluck('error', 'message'))
+      .pipe(filter((message) => typeof message === 'string'))
+      .pipe(tap((message: string) => {
+        this.errorSubject.next(message);
+        return this.validateForm.get('email').setErrors({'incorrect': true});
+      })).subscribe();
   }
 
   resetForm(e: MouseEvent): void {

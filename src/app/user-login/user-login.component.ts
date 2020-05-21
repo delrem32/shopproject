@@ -3,7 +3,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoginService} from '../login.service';
 import {ProfileService} from '../profile.service';
 import {Router} from '@angular/router';
-import {flatMap, tap} from 'rxjs/operators';
+import {filter, flatMap, pluck, tap} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-user-login',
@@ -12,6 +13,7 @@ import {flatMap, tap} from 'rxjs/operators';
 })
 export class UserLoginComponent implements OnInit {
   validateForm!: FormGroup;
+  errorSubject = new BehaviorSubject(null) as BehaviorSubject<string>;
   profile$ = this.profileService.profileSubject;
 
   isLogged() {
@@ -29,10 +31,13 @@ export class UserLoginComponent implements OnInit {
   submitForm(): void {
     const [success$, error$] = this.authService.login(this.validateForm.getRawValue());
     success$.pipe(flatMap(() => this.authService.info()[0])).subscribe();
-    for (const i in this.validateForm.controls) {
-      this.validateForm.controls[i].markAsDirty();
-      this.validateForm.controls[i].updateValueAndValidity();
-    }
+    error$.pipe(pluck('error', 'message'))
+      .pipe(filter(message => typeof message === 'string'))
+      .pipe(tap((message: string) => {
+        this.errorSubject.next(message);
+        this.validateForm.get('email').setErrors({'incorrect': true});
+        return this.validateForm.get('password').reset('');
+      })).subscribe();
   }
 
   constructor(private fb: FormBuilder,
@@ -43,7 +48,7 @@ export class UserLoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      email: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]]
     });
   }
