@@ -2,22 +2,22 @@
   <nz-sider nzCollapsible nzWidth="160px">
     <div class="logo"></div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-submenu nzTitle="User" nzIcon="user">
+      <li nz-menu-item routerLink="home" routerLinkActive="active">Home</li>
+      <li nz-submenu nzTitle="Store" nzIcon="shopping-cart">
         <ul>
-          <li nz-menu-item routerLink="home" routerLinkActive="active">Home</li>
-          <li nz-menu-item routerLink="news" routerLinkActive="active">News</li>
-          <li nz-menu-item routerLink="admin" routerLinkActive="active">Administration</li>
+          <li nz-menu-item routerLink="news" routerLinkActive="active">HOT</li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="Team" nzIcon="team">
+      <li nz-submenu nzTitle="Profile" nzIcon="user">
         <ul>
           <li nz-menu-item>Login</li>
           <li nz-menu-item routerLink="register" routerLinkActive="active">Registration</li>
         </ul>
       </li>
-      <li nz-menu-item>
-        <i nz-icon nzType="file"></i>
-        <span>File</span>
+      <li nz-submenu nzTitle="Administration" nzIcon="control">
+        <ul>
+          <li nz-menu-item routerLink="admin" routerLinkActive="active">Administration</li>
+        </ul>
       </li>
     </ul>
   </nz-sider>

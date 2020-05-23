@@ -30,7 +30,8 @@ export class UserRegistrationComponent implements OnInit {
       this.validateForm.controls[key].updateValueAndValidity();
     }
     const [success$, error$] = this.authService.register({email, password});
-    success$.pipe(tap(() => this.router.navigate(['home'])),
+    success$
+      .pipe(tap(() => this.router.navigate(['/'])),
       tap(() => {
         return this.errorSubject.next(null);
       })).subscribe();

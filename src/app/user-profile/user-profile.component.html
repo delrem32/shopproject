@@ -1,0 +1,99 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+      <input nz-input formControlName="email" id="email"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="gender" nzRequired>
+          <span>
+            Gender
+            <i nz-icon nz-tooltip nzTitle="What do you want other to call you" nzType="question-circle"
+               nzTheme="outline"></i>
+          </span>
+    </nz-form-label>
+    <nz-select formControlName="gender" class="phone-select">
+      <nz-option nzLabel="Herr" nzValue="Herr"></nz-option>
+      <nz-option nzLabel="Frau" nzValue="Frau"></nz-option>
+    </nz-select>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="firstName">First Name</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid First Name!">
+      <input nz-input formControlName="firstName" id="firstName"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="lastName">Last Name</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid Last Name!">
+      <input nz-input formControlName="lastName" id="lastName"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phoneNumber">Phone Number</nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      [nzValidateStatus]="validateForm.controls['phoneNumber']"
+      nzErrorTip="Please input your phone number!"
+    >
+      <nz-input-group [nzAddOnBefore]="addOnBeforeTemplate">
+        <ng-template #addOnBeforeTemplate>
+          <nz-select formControlName="phoneNumberPrefix" class="phone-select">
+            <nz-option nzLabel="+49" nzValue="+49"></nz-option>
+            <nz-option nzLabel="+0" nzValue="+0"></nz-option>
+          </nz-select>
+        </ng-template>
+        <input formControlName="phoneNumber" id="'phoneNumber'" nz-input/>
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="address" nzRequired>Address</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input address!">
+      <input nz-input id="website" formControlName="address" placeholder="address"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="captcha" >Captcha</nz-form-label>
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Please input the captcha you got!"
+      nzExtra="We must make sure that your are a human."
+    >
+      <div nz-row [nzGutter]="8">
+        <div nz-col [nzSpan]="12">
+          <input nz-input formControlName="captcha" id="captcha"/>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <button nz-button (click)="getCaptcha($event)">Get captcha</button>
+        </div>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <label nz-checkbox formControlName="agree">
+        <span>I have read the <a>agreement</a></span>
+      </label>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item nz-row class="register-area">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" [disabled]="!validateForm.valid">Save</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<ng-template #templateNot>
+  <div class="ant-notification-notice-content">
+    <div class="ant-notification-notice-with-icon">
+      <span class="ant-notification-notice-icon"><i nz-icon nzType="smile" style="color: rgb(16, 142, 233);"></i></span>
+      <div class="ant-notification-notice-message">Your Profile updated!</div>
+      <div class="ant-notification-notice-description">
+        Your profile was successfully updated. Now you can do a order.
+      </div>
+    </div>
+  </div>
+</ng-template>

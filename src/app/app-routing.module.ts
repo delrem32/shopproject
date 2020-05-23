@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {NewsComponent} from './news/news.component';
 import {UserRegistrationComponent} from './user-registration/user-registration.component';
+import {UserProfileComponent} from './user-profile/user-profile.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
     loadChildren: () => import('./admin-panel/admin-panel.module')
       .then(m => m.AdminPanelModule)
   },
-  {path: 'register', component: UserRegistrationComponent}
+  {path: 'register', component: UserRegistrationComponent},
+  {path: 'profile/:id', component: UserProfileComponent}
 ];
 
 @NgModule({

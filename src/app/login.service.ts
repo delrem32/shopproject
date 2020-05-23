@@ -96,7 +96,7 @@ export class LoginService {
       tap(() => this.profileService.clearProfile()),
       tap(() => this.userSubject.next(null)),
       tap(() => this.authorizedSubject.next(false)),
-      tap(() => localStorage.setItem('token', undefined))
+      tap(() => localStorage.removeItem('token'))
     ).subscribe();
     return [success$, error$];
   }

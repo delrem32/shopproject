@@ -14,19 +14,20 @@ import {CardsModule} from './cards/cards.module';
 import {AdminPanelModule} from './admin-panel/admin-panel.module';
 import {
   NzBadgeModule, NzButtonModule,
-  NzCardModule,
+  NzCardModule, NzCheckboxModule,
   NzFormModule,
   NzGridModule,
   NzIconModule,
   NzInputModule,
   NzLayoutModule,
-  NzMenuModule
+  NzMenuModule, NzNotificationModule, NzSelectModule, NzToolTipModule
 } from 'ng-zorro-antd';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { UserLoginComponent } from './user-login/user-login.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {JwtInterceptor} from './jwt.interceptor';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { UserRegistrationComponent } from './user-registration/user-registration
     CardDetailsComponent,
     CardItemComponent,
     UserLoginComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +58,11 @@ import { UserRegistrationComponent } from './user-registration/user-registration
     NzFormModule,
     ReactiveFormsModule,
     NzInputModule,
-    NzButtonModule
+    NzButtonModule,
+    NzSelectModule,
+    NzToolTipModule,
+    NzCheckboxModule,
+    NzNotificationModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
   bootstrap: [AppComponent]
