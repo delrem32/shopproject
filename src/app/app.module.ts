@@ -14,13 +14,13 @@ import {CardsModule} from './cards/cards.module';
 import {AdminPanelModule} from './admin-panel/admin-panel.module';
 import {
   NzBadgeModule, NzButtonModule,
-  NzCardModule, NzCheckboxModule,
+  NzCardModule, NzCarouselModule, NzCheckboxModule,
   NzFormModule,
   NzGridModule,
   NzIconModule,
   NzInputModule,
   NzLayoutModule,
-  NzMenuModule, NzNotificationModule, NzSelectModule, NzToolTipModule
+  NzMenuModule, NzNotificationModule, NzSelectModule, NzTabsModule, NzToolTipModule
 } from 'ng-zorro-antd';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { UserLoginComponent } from './user-login/user-login.component';
@@ -62,7 +62,9 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     NzSelectModule,
     NzToolTipModule,
     NzCheckboxModule,
-    NzNotificationModule
+    NzNotificationModule,
+    NzCarouselModule,
+    NzTabsModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
   bootstrap: [AppComponent]

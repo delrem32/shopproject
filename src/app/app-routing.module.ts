@@ -4,12 +4,14 @@ import {HomeComponent} from './home/home.component';
 import {NewsComponent} from './news/news.component';
 import {UserRegistrationComponent} from './user-registration/user-registration.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
+import {CardDetailsComponent} from './card-details/card-details.component';
 
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'news', component: NewsComponent},
+  {path: 'card/:id', component: CardDetailsComponent},
   {
     path: 'admin',
     loadChildren: () => import('./admin-panel/admin-panel.module')

@@ -2,21 +2,21 @@
   <nz-sider nzCollapsible nzWidth="160px">
     <div class="logo"></div>
     <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-menu-item routerLink="home" routerLinkActive="active">Home</li>
+      <li nz-menu-item routerLink="home" routerLinkActive="active" nzMatchRouter>Home</li>
       <li nz-submenu nzTitle="Store" nzIcon="shopping-cart">
         <ul>
-          <li nz-menu-item routerLink="news" routerLinkActive="active">HOT</li>
+          <li nz-menu-item routerLink="news" routerLinkActive="active" nzMatchRouter>HOT</li>
         </ul>
       </li>
       <li nz-submenu nzTitle="Profile" nzIcon="user">
         <ul>
           <li nz-menu-item>Login</li>
-          <li nz-menu-item routerLink="register" routerLinkActive="active">Registration</li>
+          <li nz-menu-item routerLink="register" routerLinkActive="active" nzMatchRouter>Registration</li>
         </ul>
       </li>
       <li nz-submenu nzTitle="Administration" nzIcon="control">
         <ul>
-          <li nz-menu-item routerLink="admin" routerLinkActive="active">Administration</li>
+          <li nz-menu-item routerLink="admin" routerLinkActive="active" nzMatchRouter>Administration</li>
         </ul>
       </li>
     </ul>
