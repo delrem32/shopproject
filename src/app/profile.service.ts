@@ -14,6 +14,7 @@ export interface UserProfile {
   gender?: string;
   address?: string;
   agree?: boolean;
+  cart?: string[];
 }
 
 @Injectable({

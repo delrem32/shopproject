@@ -4,6 +4,7 @@ import {flatMap, map, switchMap} from 'rxjs/operators';
 import {CardServiceService} from '../card-service.service';
 import {Observable, Subject} from 'rxjs';
 import {CardInterface} from '../shared/cards/card-interface';
+import {ShoppingCartService} from '../shopping-cart.service';
 
 @Component({
   selector: 'app-card-details',
@@ -15,13 +16,17 @@ export class CardDetailsComponent implements OnInit {
   effect = 'scrollx';
   card$: Observable<CardInterface>;
 
-  constructor(private route: ActivatedRoute, private cardService: CardServiceService) {
+  constructor(private route: ActivatedRoute, private cardService: CardServiceService, private orderService: ShoppingCartService) {
   }
 
   ngOnInit(): void {
     this.card$ = this.route.paramMap
       .pipe(map((params) => params.get('id')))
       .pipe(switchMap((id: string) => this.cardService.getSingleCard(id)));
+  }
+
+  addToOrderList(id: string) {
+    return this.orderService.patchOrdersFromCart({cart: [id]}).subscribe();
   }
 
 }

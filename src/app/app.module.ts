@@ -14,12 +14,12 @@ import {CardsModule} from './cards/cards.module';
 import {AdminPanelModule} from './admin-panel/admin-panel.module';
 import {
   NzBadgeModule, NzButtonModule,
-  NzCardModule, NzCarouselModule, NzCheckboxModule,
+  NzCardModule, NzCarouselModule, NzCheckboxModule, NzDividerModule, NzDropDownModule,
   NzFormModule,
   NzGridModule,
   NzIconModule,
   NzInputModule,
-  NzLayoutModule,
+  NzLayoutModule, NzListModule,
   NzMenuModule, NzNotificationModule, NzSelectModule, NzTabsModule, NzToolTipModule
 } from 'ng-zorro-antd';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -28,6 +28,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {JwtInterceptor} from './jwt.interceptor';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     CardItemComponent,
     UserLoginComponent,
     UserRegistrationComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ShoppingCartComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,10 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     NzCheckboxModule,
     NzNotificationModule,
     NzCarouselModule,
-    NzTabsModule
+    NzTabsModule,
+    NzDropDownModule,
+    NzListModule,
+    NzDividerModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
   bootstrap: [AppComponent]

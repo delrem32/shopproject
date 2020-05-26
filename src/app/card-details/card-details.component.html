@@ -11,7 +11,9 @@
   <div nz-row style="margin-top: 20px;">
     <div nz-col nzSpan="18">
       <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
-        <nz-tab nzTitle="Description"> {{card.description}}</nz-tab>
+        <nz-tab nzTitle="Description">
+        <p style="word-break: break-all;">{{card.description}}</p>
+        </nz-tab>
         <nz-tab nzTitle="Technical Info"> Technical Info</nz-tab>
         <nz-tab nzTitle="Feedback"> Feedback</nz-tab>
       </nz-tabset>
@@ -23,7 +25,7 @@
         noch<p style="color: green;"> {{card.quantity}}</p>
         <p nz-row>Lieferung kostet: KOSTENLOS</p>
         <p nz-row>
-          <button nz-button nzType="primary" style="margin: auto;">
+          <button nz-button nzType="primary" style="margin: auto;" (click)="addToOrderList(card._id)">
             <i nz-icon nzType="shopping-cart"></i>
             In den Einkaufswagen
           </button>

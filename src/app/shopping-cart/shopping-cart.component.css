@@ -1,0 +1,7 @@
+[nz-menu] {
+  width: 200px;
+}
+[nz-menu-item] {
+  white-space: normal;
+  overflow-wrap: break-word;
+}
