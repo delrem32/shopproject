@@ -2,7 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ProfileService} from '../../profile.service';
 import {ShoppingCartService} from '../../shopping-cart.service';
 import {CardServiceService} from '../../card-service.service';
-import {flatMap, map, pluck, scan, take, tap} from 'rxjs/operators';
+import {flatMap, map, pluck, scan, startWith, switchMap, take, tap} from 'rxjs/operators';
+import {combineLatest, Subject} from 'rxjs';
+import {CardInterface} from '../../shared/cards/card-interface';
 
 @Component({
   selector: 'app-order-list',
@@ -13,6 +15,7 @@ export class OrderListComponent implements OnInit {
   data = [];
   profile$ = this.profileService.profile$;
   cardsList$;
+  refresh$ = new Subject() as Subject<CardInterface>;
 
   constructor(private profileService: ProfileService, private orderService: ShoppingCartService,
               private cardService: CardServiceService) {
@@ -26,18 +29,13 @@ export class OrderListComponent implements OnInit {
 
   initCart() {
     // profile$ -> null ??
-    this.cardsList$ = this.profile$
+    this.cardsList$ = this.refresh$.asObservable().pipe(startWith(null))
+      .pipe(take(1))
+      .pipe(flatMap(() => this.profileService.profile$))
       .pipe(take(1))
       .pipe(pluck('cart'))
-      .pipe(flatMap((data: string[]) => {
-        return data;
-      }))
-      .pipe(flatMap((id: string) => {
-        return this.cardService.getSingleCard(id);
-      }))
-      .pipe(scan((acc, data) => {
-        return [...acc, data];
-      }, []));
+      .pipe(flatMap((ids: string[]) => combineLatest(
+        ids.map(id => this.cardService.getSingleCard(id)))));
   }
 
   loadData(pi: number): void {

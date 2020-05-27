@@ -1,10 +1,11 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ShoppingCartService} from '../shopping-cart.service';
 import {ProfileService, UserProfile} from '../profile.service';
-import {Observable, of} from 'rxjs';
-import {combineLatest, delay, filter, flatMap, pluck, scan, take, tap} from 'rxjs/operators';
+import {combineLatest, BehaviorSubject, Observable, of, Subject} from 'rxjs';
+import {delay, filter, flatMap, pluck, scan, startWith, take, tap} from 'rxjs/operators';
 import {CardInterface} from '../shared/cards/card-interface';
 import {CardServiceService} from '../card-service.service';
+
 
 @Component({
   selector: 'app-shopping-cart',
@@ -14,6 +15,7 @@ import {CardServiceService} from '../card-service.service';
 export class ShoppingCartComponent implements OnInit, OnDestroy {
   cardsList$: Observable<CardInterface[]>;
   cards;
+  refresh$ = new Subject() as Subject<CardInterface>;
 
   constructor(private orderService: ShoppingCartService,
               private profileService: ProfileService,
@@ -31,26 +33,23 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initCart();
   }
+
   ngOnDestroy(): void {
   }
 
   initCart() {
     // profile$ -> null ??
-    this.cardsList$ = this.profileService.profile$
+    this.cardsList$ = this.refresh$.asObservable().pipe(startWith(null))
       .pipe(take(1))
+      .pipe(flatMap(() => this.profileService.profile$))
       .pipe(pluck('cart'))
-      .pipe(flatMap((data: string[]) => {
-        return data;
-      }))
-      .pipe(flatMap((id: string) => {
-        return this.cardService.getSingleCard(id);
-      }))
-      .pipe(scan((acc, data) => {
-        return [...acc, data];
-      }, []));
+      .pipe(flatMap((ids: string[]) => combineLatest(
+        ids.map(id => this.cardService.getSingleCard(id)))));
   }
 
   deleteOrderFromCart(id: string) {
-    return this.orderService.deleteOrdersFromCartByPatch(id).subscribe();
+    return this.orderService.deleteOrdersFromCartByPatch({cart: [id]})
+      .pipe(tap(() => this.refresh$.next()))
+      .subscribe();
   }
 }
