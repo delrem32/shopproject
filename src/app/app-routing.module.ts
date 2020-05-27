@@ -17,6 +17,10 @@ const routes: Routes = [
     loadChildren: () => import('./admin-panel/admin-panel.module')
       .then(m => m.AdminPanelModule)
   },
+  {
+    path: 'order', loadChildren: () => import('./order/order.module')
+      .then(order => order.OrderModule)
+  },
   {path: 'register', component: UserRegistrationComponent},
   {path: 'profile/:id', component: UserProfileComponent}
 ];

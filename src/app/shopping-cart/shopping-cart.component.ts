@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ShoppingCartService} from '../shopping-cart.service';
 import {ProfileService, UserProfile} from '../profile.service';
 import {Observable, of} from 'rxjs';
@@ -11,7 +11,7 @@ import {CardServiceService} from '../card-service.service';
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.css']
 })
-export class ShoppingCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit, OnDestroy {
   cardsList$: Observable<CardInterface[]>;
   cards;
 
@@ -31,6 +31,8 @@ export class ShoppingCartComponent implements OnInit {
   ngOnInit(): void {
     this.initCart();
   }
+  ngOnDestroy(): void {
+  }
 
   initCart() {
     // profile$ -> null ??
@@ -40,7 +42,7 @@ export class ShoppingCartComponent implements OnInit {
       .pipe(flatMap((data: string[]) => {
         return data;
       }))
-      .pipe(tap((id: string) => {
+      .pipe(flatMap((id: string) => {
         return this.cardService.getSingleCard(id);
       }))
       .pipe(scan((acc, data) => {

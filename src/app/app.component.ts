@@ -31,8 +31,7 @@ export class AppComponent implements OnInit {
         filter(authorized => !authorized),
         flatMap(() => this.authService.check()[0]),
         filter(propEq('authorized', true)),
-        flatMap(() => this.authService.info()),
-        flatMap(() => this.router.navigate(['/']))
+        flatMap(() => this.authService.info())
       ).subscribe();
   }
 }

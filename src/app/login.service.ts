@@ -106,7 +106,6 @@ export class LoginService {
     success$.pipe(
       tap((user) => this.userSubject.next(user)),
       tap(({ profile }) => {
-        debugger;
         return this.profileService.requestProfile(profile);
       })
     ).subscribe();
