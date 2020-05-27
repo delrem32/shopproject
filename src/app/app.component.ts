@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoginService} from './login.service';
 import {filter, flatMap, take} from 'rxjs/operators';
 import {Router} from '@angular/router';
@@ -10,12 +10,18 @@ import {ProfileService} from './profile.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'shopproject';
   authorized$ = this.authService.isAuthorized$;
   profile$ = this.profileService.profile$;
-  constructor(private authService: LoginService, private router: Router, private profileService: ProfileService) {
+
+
+  ngOnInit(): void {
     this.initApp();
+  }
+
+  constructor(private authService: LoginService, private router: Router, private profileService: ProfileService) {
+
   }
 
   initApp() {

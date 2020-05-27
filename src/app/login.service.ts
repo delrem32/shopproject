@@ -105,7 +105,10 @@ export class LoginService {
     const [success$, error$] = httpResponseOrErrorPartition(this.http.get('http://localhost:5000/users/info').pipe(share()));
     success$.pipe(
       tap((user) => this.userSubject.next(user)),
-      tap(({ profile }) => this.profileService.requestProfile(profile))
+      tap(({ profile }) => {
+        debugger;
+        return this.profileService.requestProfile(profile);
+      })
     ).subscribe();
     error$.pipe(
       tap(() => this.profileService.clearProfile()),

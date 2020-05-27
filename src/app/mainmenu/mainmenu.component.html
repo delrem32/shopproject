@@ -1,23 +1,22 @@
-<div class="ui secondary big menu">
-  <a class="item" routerLink="home" routerLinkActive="active">Home</a>
-  <a class="item" routerLink="news" routerLinkActive="active">News</a>
-  <a class="item" routerLink="#" routerLinkActive="active">Abstaction</a>
-  <a class="item" routerLink="#" routerLinkActive="active">NewAbstactions</a>
-  <a class="item" routerLink="#" routerLinkActive="active">HomeAbstaction</a>
-  <a class="item" routerLink="#" routerLinkActive="active">AbstactionAbstaction</a>
-  <div class="right menu">
-    <a class="item">
-      <i class="shopping cart icon"></i>Einkaufswagen
-      <div class="ui label">5</div>
-    </a>
-    <div class="item">
-      <div class="ui icon input">
-        <input type="text" placeholder="Search...">
-        <i class="search link icon"></i>
-      </div>
-    </div>
-    <a class="ui item">
-      Logout
-    </a>
-  </div>
-</div>
+<nz-sider nzCollapsible nzWidth="160px">
+  <div class="logo"></div>
+  <ul nz-menu nzTheme="dark" nzMode="inline">
+    <li nz-menu-item routerLink="home" routerLinkActive="active" nzMatchRouter>Home</li>
+    <li nz-submenu nzTitle="Store" nzIcon="shopping-cart">
+      <ul>
+        <li nz-menu-item routerLink="news" routerLinkActive="active" nzMatchRouter>HOT</li>
+      </ul>
+    </li>
+    <li nz-submenu nzTitle="Profile" nzIcon="user">
+      <ul>
+        <li nz-menu-item>Login</li>
+        <li nz-menu-item routerLink="register" routerLinkActive="active" nzMatchRouter>Registration</li>
+      </ul>
+    </li>
+    <li nz-submenu nzTitle="Administration" nzIcon="control">
+      <ul>
+        <li nz-menu-item routerLink="admin" routerLinkActive="active" nzMatchRouter>Administration</li>
+      </ul>
+    </li>
+  </ul>
+</nz-sider>

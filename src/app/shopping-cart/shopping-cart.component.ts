@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ShoppingCartService} from '../shopping-cart.service';
 import {ProfileService, UserProfile} from '../profile.service';
 import {Observable, of} from 'rxjs';
-import {combineLatest, filter, flatMap, pluck, scan, take, tap} from 'rxjs/operators';
+import {combineLatest, delay, filter, flatMap, pluck, scan, take, tap} from 'rxjs/operators';
 import {CardInterface} from '../shared/cards/card-interface';
 import {CardServiceService} from '../card-service.service';
 
@@ -12,31 +12,38 @@ import {CardServiceService} from '../card-service.service';
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit {
-  profile$ = this.profileService.profile$;
   cardsList$: Observable<CardInterface[]>;
+  cards;
 
   constructor(private orderService: ShoppingCartService,
               private profileService: ProfileService,
               private cardService: CardServiceService) {
   }
 
+  isLogged() {
+    if (!localStorage.getItem('token')) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   ngOnInit(): void {
-    this.cardsList$ = this.profile$
-      .pipe(tap((data) => {
-        debugger;
-        return console.log(data);
-      }))
+    this.initCart();
+  }
+
+  initCart() {
+    // profile$ -> null ??
+    this.cardsList$ = this.profileService.profile$
       .pipe(take(1))
       .pipe(pluck('cart'))
       .pipe(flatMap((data: string[]) => {
-        debugger;
         return data;
       }))
       .pipe(tap((id: string) => {
         return this.cardService.getSingleCard(id);
       }))
       .pipe(scan((acc, data) => {
-        debugger;
         return [...acc, data];
       }, []));
   }

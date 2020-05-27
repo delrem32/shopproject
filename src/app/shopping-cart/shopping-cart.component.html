@@ -1,14 +1,16 @@
 <a nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight" nzTrigger="click" style="float: right;
-        margin: 0px 40px 0px 0px;" *ngIf="cardsList$|async as cards">
+        margin: 0px 40px 0px 0px;" *ngIf="isLogged()">
   <nz-dropdown-menu #menu="nzDropdownMenu">
-    <ul nz-menu *ngFor="let card of cards">
-      <li nz-menu-item>
-        <i nz-icon nzType="shopping-cart"></i>
-        {{card.name}}<br>
-        {{card.description}}
-        <button nz-button nzType="danger" nzSize="small" (click)="deleteOrderFromCart(card._id)">X</button>
-      </li>
-    </ul>
+    <ng-container *ngIf="cardsList$|async as cards">
+      <ul nz-menu *ngFor="let card of cards">
+        <li nz-menu-item>
+          <i nz-icon nzType="shopping-cart"></i>
+          {{card.name}}<br>
+          {{card.description}}
+          <button nz-button nzType="danger" nzSize="small" (click)="deleteOrderFromCart(card._id)">X</button>
+        </li>
+      </ul>
+    </ng-container>
   </nz-dropdown-menu>
   <nz-badge [nzCount]="5" [nzOffset]="[10,15]">
     <i nz-icon nzType="shopping-cart" style="font-size: 30px;"></i>
