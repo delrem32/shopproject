@@ -26,7 +26,7 @@ export class OrderListComponent implements OnInit {
 
   initCart() {
     // profile$ -> null ??
-    this.cardsList$ = this.profileService.profile$
+    this.cardsList$ = this.profile$
       .pipe(take(1))
       .pipe(pluck('cart'))
       .pipe(flatMap((data: string[]) => {

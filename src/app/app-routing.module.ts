@@ -5,6 +5,7 @@ import {NewsComponent} from './news/news.component';
 import {UserRegistrationComponent} from './user-registration/user-registration.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
 import {CardDetailsComponent} from './card-details/card-details.component';
+import {IsAuthorizedGuard} from './is-authorized.guard';
 
 
 const routes: Routes = [
@@ -19,10 +20,11 @@ const routes: Routes = [
   },
   {
     path: 'order', loadChildren: () => import('./order/order.module')
-      .then(order => order.OrderModule)
+      .then(order => order.OrderModule),
+    canActivate: [IsAuthorizedGuard]
   },
   {path: 'register', component: UserRegistrationComponent},
-  {path: 'profile/:id', component: UserProfileComponent}
+  {path: 'profile/:id', component: UserProfileComponent, canActivate: [IsAuthorizedGuard]}
 ];
 
 @NgModule({
