@@ -1,4 +1,4 @@
-<nz-list nzItemLayout="vertical">
+<nz-list nzItemLayout="vertical" *ngIf="profile$|async">
   <ng-container *ngIf="cardsList$|async as cards">
   <nz-list-item *ngFor="let card of cards">
     <nz-list-item-meta>

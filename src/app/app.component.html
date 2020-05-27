@@ -24,7 +24,7 @@
   </nz-sider>
   <nz-layout>
     <nz-header>
-      <app-shopping-cart></app-shopping-cart>
+      <app-shopping-cart *ngIf="profile$|async"></app-shopping-cart>
       <app-user-login style="margin-top: 10px; float: right;"></app-user-login>
     </nz-header>
     <nz-content>
