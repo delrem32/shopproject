@@ -14,7 +14,7 @@ import {CardInterface} from '../../shared/cards/card-interface';
 export class OrderListComponent implements OnInit {
   data = [];
   profile$ = this.profileService.profile$;
-  cardsList$: Observable<[ObservedValueOf<CardInterface>]>;
+  cardsList$;
   refresh$ = new Subject() as Subject<CardInterface>;
 
   constructor(private profileService: ProfileService, private orderService: ShoppingCartService,
@@ -23,7 +23,6 @@ export class OrderListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadData(1);
     this.initCart();
   }
 
@@ -33,21 +32,13 @@ export class OrderListComponent implements OnInit {
       .pipe(
         flatMap(() => this.profileService.profile$)),
         pluck('cart'),
-        flatMap((ids: string[]) => combineLatest<CardInterface>(
+        flatMap((ids: string[]) => combineLatest<CardInterface[]>(
           ids.map(id => this.cardService.getSingleCard(id))));
   }
 
-  loadData(pi: number): void {
-    this.data = new Array(5).fill({}).map((_, index) => {
-      return {
-        href: 'http://ant.design',
-        title: `ant design part ${index} (page: ${pi})`,
-        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-        description: 'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-        content:
-          'We supply a series of design principles, practical patterns and high quality design resources ' +
-          '(Sketch and Axure), to help people create their product prototypes beautifully and efficiently.'
-      };
-    });
+  deleteOrderFromCart(id: string) {
+    return this.orderService.deleteOrdersFromCartByPatch({cart: [id]})
+      .pipe(tap(() => this.refresh$.next()))
+      .subscribe();
   }
 }
