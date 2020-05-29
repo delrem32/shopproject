@@ -3,7 +3,7 @@ import {ProfileService} from '../../profile.service';
 import {ShoppingCartService} from '../../shopping-cart.service';
 import {CardServiceService} from '../../card-service.service';
 import {flatMap, map, pluck, scan, startWith, switchMap, take, tap} from 'rxjs/operators';
-import {combineLatest, Subject} from 'rxjs';
+import {combineLatest, Observable, ObservedValueOf, Subject} from 'rxjs';
 import {CardInterface} from '../../shared/cards/card-interface';
 
 @Component({
@@ -14,7 +14,7 @@ import {CardInterface} from '../../shared/cards/card-interface';
 export class OrderListComponent implements OnInit {
   data = [];
   profile$ = this.profileService.profile$;
-  cardsList$;
+  cardsList$: Observable<[ObservedValueOf<CardInterface>]>;
   refresh$ = new Subject() as Subject<CardInterface>;
 
   constructor(private profileService: ProfileService, private orderService: ShoppingCartService,
@@ -30,12 +30,11 @@ export class OrderListComponent implements OnInit {
   initCart() {
     // profile$ -> null ??
     this.cardsList$ = this.refresh$.asObservable().pipe(startWith(null))
-      .pipe(take(1))
-      .pipe(flatMap(() => this.profileService.profile$))
-      .pipe(take(1))
-      .pipe(pluck('cart'))
-      .pipe(flatMap((ids: string[]) => combineLatest(
-        ids.map(id => this.cardService.getSingleCard(id)))));
+      .pipe(
+        flatMap(() => this.profileService.profile$)),
+        pluck('cart'),
+        flatMap((ids: string[]) => combineLatest<CardInterface>(
+          ids.map(id => this.cardService.getSingleCard(id))));
   }
 
   loadData(pi: number): void {
