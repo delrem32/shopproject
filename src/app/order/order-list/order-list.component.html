@@ -11,7 +11,7 @@
     </nz-list-item-meta>
     {{ card.description }}
     <ul nz-list-item-actions>
-        <nz-list-item-action><a (click)="info(card._id)">edit</a></nz-list-item-action>
+        <nz-list-item-action><a [routerLink]="['/card', card._id]">info</a></nz-list-item-action>
         <nz-list-item-action><a (click)="deleteOrderFromCart(card._id)">more</a></nz-list-item-action>
     </ul>
     <nz-list-item-extra>

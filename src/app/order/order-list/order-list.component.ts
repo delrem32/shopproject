@@ -30,10 +30,13 @@ export class OrderListComponent implements OnInit {
     // profile$ -> null ??
     this.cardsList$ = this.refresh$.asObservable().pipe(startWith(null))
       .pipe(
-        flatMap(() => this.profileService.profile$)),
+        flatMap(() => this.profileService.profile$),
         pluck('cart'),
-        flatMap((ids: string[]) => combineLatest<CardInterface[]>(
-          ids.map(id => this.cardService.getSingleCard(id))));
+        flatMap((ids: string[]) => combineLatest(
+          ids.map(id => this.cardService.getSingleCard(id))
+          )
+        )
+      );
   }
 
   deleteOrderFromCart(id: string) {
