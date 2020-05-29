@@ -14,7 +14,7 @@ import {CardInterface} from '../../shared/cards/card-interface';
 export class OrderListComponent implements OnInit {
   data = [];
   profile$ = this.profileService.profile$;
-  cardsList$;
+  cardsList$: Observable<CardInterface[]>;
   refresh$ = new Subject() as Subject<CardInterface>;
 
   constructor(private profileService: ProfileService, private orderService: ShoppingCartService,
@@ -27,7 +27,6 @@ export class OrderListComponent implements OnInit {
   }
 
   initCart() {
-    // profile$ -> null ??
     this.cardsList$ = this.refresh$.asObservable().pipe(startWith(null))
       .pipe(
         flatMap(() => this.profileService.profile$),
