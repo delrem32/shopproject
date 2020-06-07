@@ -28,7 +28,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {JwtInterceptor} from './jwt.interceptor';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { ShoppingCartComponent } from './cart/shopping-cart/shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +72,9 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
     NzDividerModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
+  exports: [
+    CardListComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

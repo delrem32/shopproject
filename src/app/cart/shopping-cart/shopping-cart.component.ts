@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {ShoppingCartService} from '../shopping-cart.service';
-import {ProfileService, UserProfile} from '../profile.service';
+import {ShoppingCartService} from '../../shopping-cart.service';
+import {ProfileService, UserProfile} from '../../profile.service';
 import {combineLatest, BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {delay, filter, flatMap, pluck, scan, startWith, take, tap} from 'rxjs/operators';
-import {CardInterface} from '../shared/cards/card-interface';
-import {CardServiceService} from '../card-service.service';
+import {CardInterface} from '../../shared/cards/card-interface';
+import {CardServiceService} from '../../card-service.service';
 
 
 @Component({

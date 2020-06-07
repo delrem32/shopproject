@@ -23,6 +23,11 @@ const routes: Routes = [
       .then(order => order.OrderModule),
     canActivate: [IsAuthorizedGuard]
   },
+  {
+    path: 'cart', loadChildren: () => import('./cart/cart.module')
+      .then(cart => cart.CartModule),
+    canActivate: [IsAuthorizedGuard]
+  },
   {path: 'register', component: UserRegistrationComponent},
   {path: 'profile/:id', component: UserProfileComponent, canActivate: [IsAuthorizedGuard]}
 ];
