@@ -1,5 +1,15 @@
 <div nz-row [nzGutter]="8" *ngIf="cardsList$|async as cards">
-  <app-card-item *ngFor="let card of cards" [card]="card" [routerLink]="['/card', card._id]"></app-card-item>
+  <div nz-col  [nzSpan]="4" *ngFor="let card of cards" [routerLink]="['/card', card._id]">
+    <nz-card style="height: 100%;" nzHoverable [nzCover]="coverTemplate" nzTitle="{{card.name}}">
+      <p>{{card.type}}</p>
+      <p style="overflow: hidden; max-height: 100px;">{{card.description}}</p>
+      <p>Quantity:{{card.quantity}}</p>
+    </nz-card>
+    <ng-template #coverTemplate>
+      <img alt="example" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Icecat1-300x300.svg" />
+    </ng-template>
+  </div>
+  
 </div>
 
 

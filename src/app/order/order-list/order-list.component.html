@@ -1,22 +1,20 @@
-<nz-list nzItemLayout="vertical" *ngIf="profile$|async">
-  <ng-container *ngIf="cardsList$|async as cards">
-    <nz-list-item *ngFor="let card of cards">
-      <nz-list-item-meta>
-        <nz-list-item-meta-title>
-          <a>{{ card.name }}</a>
-        </nz-list-item-meta-title>
-        <nz-list-item-meta-description>
-          {{ card.description }}
-        </nz-list-item-meta-description>
-      </nz-list-item-meta>
-      {{ card.description }}
-      <nz-list-item-extra>
-        <img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"/>
-      </nz-list-item-extra>
-      <ul nz-list-item-actions>
-        <nz-list-item-action><a [routerLink]="['/card', card._id]">info</a></nz-list-item-action>
-        <nz-list-item-action><a (click)="deleteOrderFromCart(card._id)">delete</a></nz-list-item-action>
-      </ul>
-    </nz-list-item>
-  </ng-container>
-</nz-list>
+<nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+  <nz-tab [nzTitle]="'Active Orders'">
+    <app-order-form *ngFor="let order of activeOrdersList$|async"
+                    [order]="order"
+    >
+    </app-order-form>
+  </nz-tab>
+  <nz-tab [nzTitle]="'Completed/Canceled'">
+    <app-order-form *ngFor="let order of completedOrdersList$|async"
+                    [order]="order"
+    >
+    </app-order-form>
+  </nz-tab>
+</nz-tabset>
+
+
+
+
+
+

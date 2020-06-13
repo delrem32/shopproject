@@ -1,21 +1,27 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { OrderRoutingModule } from './order-routing.module';
-import { OrderListComponent } from './order-list/order-list.component';
-import {NzIconModule, NzListModule} from 'ng-zorro-antd';
-import { OrderActiveComponent } from './order-active/order-active.component';
-import { OrderCompletedComponent } from './order-completed/order-completed.component';
-import { OrderFormComponent } from './order-form/order-form.component';
+import {OrderRoutingModule} from './order-routing.module';
+import {OrderListComponent} from './order-list/order-list.component';
+import {NzButtonModule, NzCollapseModule, NzDividerModule, NzGridModule, NzIconModule, NzListModule, NzTabsModule} from 'ng-zorro-antd';
+import {OrderFormComponent} from './order-form/order-form.component';
+import {CartModule} from '../cart/cart.module';
 
 
 @NgModule({
-  declarations: [OrderListComponent, OrderActiveComponent, OrderCompletedComponent, OrderFormComponent],
+  declarations: [OrderListComponent, OrderListComponent, OrderFormComponent],
   imports: [
     CommonModule,
     OrderRoutingModule,
     NzListModule,
-    NzIconModule
+    NzIconModule,
+    NzGridModule,
+    NzDividerModule,
+    NzButtonModule,
+    NzCollapseModule,
+    CartModule,
+    NzTabsModule
   ]
 })
-export class OrderModule { }
+export class OrderModule {
+}

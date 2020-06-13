@@ -1,0 +1,8 @@
+<div *ngIf="profile$|async">
+  <ng-container *ngIf="cardsList$|async as cards">
+    <app-cart-form  *ngFor="let card of cards" [card]="card" [editable]="true"></app-cart-form>
+  </ng-container>
+  <nz-row>
+    <button nz-button nzType="primary" (click)="createOrder()">Go to Pay</button>
+  </nz-row>
+</div>
