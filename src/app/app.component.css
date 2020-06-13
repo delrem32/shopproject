@@ -10,7 +10,10 @@ nz-header {
 
 nz-content {
   margin: 16px 16px;
-  min-height: 550px;
+}
+
+nz-layout {
+  min-height: 100%;
 }
 
 .inner-content {

@@ -2,14 +2,12 @@
   <nz-tab [nzTitle]="'Active Orders'">
     <app-order-form *ngFor="let order of activeOrdersList$|async"
                     [order]="order"
-                    [orderCards$]="activeCardList$"
     >
     </app-order-form>
   </nz-tab>
   <nz-tab [nzTitle]="'Completed/Canceled'">
     <app-order-form *ngFor="let order of completedOrdersList$|async"
                     [order]="order"
-                    [orderCards$]="completedCardList$"
     >
     </app-order-form>
   </nz-tab>

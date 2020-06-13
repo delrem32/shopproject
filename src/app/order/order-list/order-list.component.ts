@@ -3,9 +3,9 @@ import {OrderInterface} from '../../shared/orders/order-interface';
 import {ProfileService} from '../../profile.service';
 import {CardServiceService} from '../../card-service.service';
 import {OrderService} from '../../order.service';
-import {combineLatest, Observable} from 'rxjs';
+import {combineLatest, Observable, of, from} from 'rxjs';
 import {CardInterface} from '../../shared/cards/card-interface';
-import {filter, flatMap, map, partition, pluck, switchMap} from 'rxjs/operators';
+import {filter, flatMap, map, partition, pluck, switchMap, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-order-list',
@@ -14,10 +14,8 @@ import {filter, flatMap, map, partition, pluck, switchMap} from 'rxjs/operators'
 })
 export class OrderListComponent implements OnInit {
   ordersList$: Observable<OrderInterface[]>;
-  activeCardList$: Observable<CardInterface[]>;
-  completedCardList$: Observable<CardInterface[]>;
-  activeOrdersList$: Observable<OrderInterface[]>;
-  completedOrdersList$: Observable<OrderInterface[]>;
+  activeOrdersList$: any;
+  completedOrdersList$: any;
   date = new Date();
 
   constructor(private profileService: ProfileService,
@@ -29,31 +27,20 @@ export class OrderListComponent implements OnInit {
     this.ordersList$ = this.orderService.getOrders();
     [this.activeOrdersList$, this.completedOrdersList$] = [
       this.ordersList$.pipe(
-        map((orders) => orders.filter((order) => order.status === 'active')
-        )),
+        map((orders) => orders.
+        filter((order) => order.status === 'active')),
+        map((orders: OrderInterface[])=>orders.map((order)=> [order, combineLatest(order.cart.map((cardId:string)=>this.cardService.getSingleCard(cardId)))])
+        ),
+        tap((data)=>console.log(data))
+        ),
       this.ordersList$.pipe(
-        map((orders) => orders
-          .filter((order) => order.status === 'completed' || order.status === 'canceled')
-        ))
+        map((orders) => orders.
+        filter((order) => order.status === 'completed' || order.status === 'canceled')),
+          map((orders: OrderInterface[])=>orders.map((order)=> [order, combineLatest(order.cart.map((cardId:string)=>this.cardService.getSingleCard(cardId)))])
+        ),
+        tap((data)=>console.log(data))
+        )
     ];
-    this.activeCardList$ = this.activeOrdersList$.pipe(
-      flatMap((orders) => orders
-        .map((order) => combineLatest(order.cart
-            .map((cardId) => this.cardService.getSingleCard(cardId))
-          )
-        )
-      ),
-      flatMap((cards) => cards)
-    );
-    this.completedCardList$ = this.completedOrdersList$.pipe(
-      flatMap((orders) => orders
-        .map((order) => combineLatest(order.cart
-            .map((cardId) => this.cardService.getSingleCard(cardId))
-          )
-        )
-      ),
-      flatMap((cards) => cards)
-    );
 
     /*this.cardList$ = this.ordersList$.pipe(
       flatMap((orders) => orders),

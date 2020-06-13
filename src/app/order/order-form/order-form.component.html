@@ -3,7 +3,7 @@
     [nzHeader]="headerTpl"
     [nzShowArrow]="false"
   >
-    <app-cart-form *ngFor="let card of orderCards$|async" [editable]="false" [card]="card" ></app-cart-form>
+    <app-cart-form *ngFor="let card of order[1]|async" [editable]="false" [card]="card" ></app-cart-form>
   </nz-collapse-panel>
 </nz-collapse>
 <ng-template #headerTpl>
@@ -12,11 +12,11 @@
       <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i>
     </div>
     <div nz-col nzSpan="12">
-      <div nz-row>Nummer: {{order._id}}</div>
-      <div nz-row>Date of Order: {{order.order_date | date}}</div>
+      <div nz-row>Nummer: {{order[0]._id}}</div>
+      <div nz-row>Date of Order: {{order[0].order_date | date}}</div>
     </div>
     <div nz-col nzSpan="6">
-      <p>{{order.sum | currency: 'EUR'}}</p>
+      <p>{{order[0].sum | currency: 'EUR'}}</p>
     </div>
     <div nz-col nzSpan="2">
       <a>

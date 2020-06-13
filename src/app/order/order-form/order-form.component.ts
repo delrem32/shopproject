@@ -4,6 +4,7 @@ import {ProfileService} from '../../profile.service';
 import {CardServiceService} from '../../card-service.service';
 import {CardInterface} from '../../shared/cards/card-interface';
 import {Observable} from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-order-form',
@@ -11,16 +12,12 @@ import {Observable} from 'rxjs';
   styleUrls: ['./order-form.component.css']
 })
 export class OrderFormComponent implements OnInit {
-  @Input() order: OrderInterface;
-  @Input() order2: OrderInterface;
-  @Input() orderCards$: Observable<CardInterface[]>;
-
-
+  @Input() order: OrderInterface | Observable<CardInterface[]>[];
+  
   constructor() {
 
   }
   ngOnInit(): void {
-
   }
 
 }
