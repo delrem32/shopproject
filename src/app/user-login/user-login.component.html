@@ -38,8 +38,12 @@
               nzType="primary"
               [disabled]="!validateForm.valid" *ngIf="!isLogged()">Log in
       </button>
-      <nz-form-label *ngIf="profile$|async as profile">Hello,<a [routerLink]="['/profile', profile._id]">{{profile.email}}</a> </nz-form-label>
-      <button nz-button nzType="danger" (click)="logout()" *ngIf="isLogged()">Logout</button>
+      <div style="color: white; border-width: medium;" *ngIf="profile$|async as profile">Hello,
+        <a style="margin-right: 10px;" [routerLink]="['/profile', profile._id]"><button nz-button nzType="primary" nzShape="circle"><i nz-icon nzType="user"></i></button> {{profile.email}}
+        </a>  
+        <button nz-button nzType="danger" (click)="logout()" *ngIf="isLogged()">
+          Logout</button>
+      </div>
     </nz-form-control>
   </nz-form-item>
 </form>

@@ -23,4 +23,8 @@ export class OrderService {
   createOrder(payload: OrderInterface): Observable<OrderInterface> {
     return this.http.post<OrderInterface>(this.apiURL, payload);
   }
+
+  getOrdersByUser(id: string): Observable<OrderInterface[]> {
+    return this.http.post<OrderInterface[]>(`${this.apiURL}/ordersByUser`, {delivery_to: id});
+  }
 }
