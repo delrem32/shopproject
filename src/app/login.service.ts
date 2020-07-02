@@ -94,6 +94,7 @@ export class LoginService {
     ).subscribe();
     error$.pipe(
       tap(() => this.profileService.clearProfile()),
+      tap(() => localStorage.removeItem('profileId')),
       tap(() => this.userSubject.next(null)),
       tap(() => this.authorizedSubject.next(false)),
       tap(() => localStorage.removeItem('token'))
@@ -106,11 +107,13 @@ export class LoginService {
     success$.pipe(
       tap((user) => this.userSubject.next(user)),
       tap(({ profile }) => {
+        localStorage.setItem('profileId', profile);
         return this.profileService.requestProfile(profile);
       })
     ).subscribe();
     error$.pipe(
       tap(() => this.profileService.clearProfile()),
+      tap(() => localStorage.removeItem('profileId')),
       tap(() => this.authorizedSubject.next(false)),
       tap(() => this.userSubject.next(false))
     ).subscribe();

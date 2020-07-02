@@ -16,9 +16,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class CartListComponent implements OnInit {
   data = [];
+  arrayCardsLenght;
   profile$ = this.profileService.profile$;
   cardsList$: Observable<CardInterface[]>;
   refresh$ = new Subject() as Subject<CardInterface>;
+  deliveryAdress$;
 
   constructor(
     private profileService: ProfileService,
@@ -32,6 +34,9 @@ export class CartListComponent implements OnInit {
 
   ngOnInit(): void {
     this.initCart();
+    this.deliveryAdress$ = this.profile$.pipe(
+      pluck('address')
+    );
   }
 
   initCart() {
@@ -39,13 +44,14 @@ export class CartListComponent implements OnInit {
       .pipe(
         flatMap(() => this.profileService.profile$),
         pluck('cart'),
-        filter((ids: string[]) => ids.length > 0),
+        filter((ids: string[]) =>{this.arrayCardsLenght=ids.length; return ids.length > 0}),
         flatMap((ids: string[]) => combineLatest(
           ids.map(id => {
             return this.cardService.getSingleCard(id);
           })
           )
-        )
+        ),
+        tap((cards) => console.log(cards.length))
       );
   }
 

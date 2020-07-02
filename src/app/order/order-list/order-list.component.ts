@@ -5,7 +5,9 @@ import {CardServiceService} from '../../card-service.service';
 import {OrderService} from '../../order.service';
 import {combineLatest, Observable, of, from} from 'rxjs';
 import {CardInterface} from '../../shared/cards/card-interface';
-import {filter, flatMap, map, partition, pluck, switchMap, tap, withLatestFrom, scan, take} from 'rxjs/operators';
+import {filter, flatMap, map, partition, pluck, switchMap, tap, withLatestFrom, scan, take, reduce} from 'rxjs/operators';
+import { LoginService } from '../../login.service';
+
 
 @Component({
   selector: 'app-order-list',
@@ -14,48 +16,33 @@ import {filter, flatMap, map, partition, pluck, switchMap, tap, withLatestFrom, 
 })
 export class OrderListComponent implements OnInit {
   ordersList$: Observable<OrderInterface[]>;
-  activeOrdersList$: any;
-  completedOrdersList$: any;
+  activeOrdersList$: Observable<[OrderInterface, CardInterface[]][]>;
+  completedOrdersList$: Observable<[OrderInterface, CardInterface[]][]>;
   date = new Date();
-  profileId$;
-  constructor(private profileService: ProfileService,
-              private cardService: CardServiceService,
-              private orderService: OrderService) {
+
+  constructor(private cardService: CardServiceService,
+              private orderService: OrderService
+             ) {
   }
 
   ngOnInit(): void {
-    this.ordersList$ = this.profileService.profile$.pipe(
-      take(1),
-      pluck('_id'),
-      flatMap((id: string) => this.orderService.getOrdersByUser(id))
-    );
+    this.ordersList$ = this.orderService.getOrdersByUser(localStorage.getItem('profileId'));
     [this.activeOrdersList$, this.completedOrdersList$] = [
       this.ordersList$.pipe(
-        map((orders) => orders.
-        filter((order) => order.status === 'active')),
-        map((orders: OrderInterface[])=>orders.map((order)=> [order, combineLatest(order.cart.map((cardId:string)=>this.cardService.getSingleCard(cardId)))])
-        ),
-        tap((data)=>console.log(data))
+        map((orders: OrderInterface[]) => orders.
+          filter((order: OrderInterface) => order.status === 'active')),
+        flatMap((orders: OrderInterface[]) => from(orders)),
+        flatMap((order: OrderInterface) => combineLatest([of(order), ...order.cart.map((cardId: string) => this.cardService.getSingleCard(cardId))])),
+        reduce((acc, [order, ...cart]: [OrderInterface, CardInterface])=> [...acc, [order, cart]], new Array<[OrderInterface, CardInterface[]]>())
         ),
       this.ordersList$.pipe(
         map((orders) => orders.
-        filter((order) => order.status === 'completed' || order.status === 'canceled')),
-        map((orders: OrderInterface[])=>orders.map((order)=> [order, combineLatest(order.cart.map((cardId:string)=>this.cardService.getSingleCard(cardId)))])
-        ),
-        tap((data)=>console.log(data))
+          filter((order) => order.status === 'completed' || order.status === 'canceled')),
+        flatMap(orders => from(orders)),
+        flatMap(order => combineLatest([of(order), ...order.cart.map((cardId) => this.cardService.getSingleCard(cardId))])),
+        reduce((acc, [order, ...cart]: [OrderInterface, CardInterface])=> [...acc, [order, cart]], new Array<[OrderInterface, CardInterface[]]>())
         )
     ];
-
-    /*this.cardList$ = this.ordersList$.pipe(
-      flatMap((orders) => orders),
-      pluck('cart'),
-      flatMap((ids: string[]) => combineLatest(
-        ids.map(id => {
-          return this.cardService.getSingleCard(id);
-        })
-        )
-      )
-    );*/
   }
 
 }

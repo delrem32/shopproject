@@ -1,15 +1,15 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {CardInterface} from '../../shared/cards/card-interface';
+import {CardInterface} from '../../../shared/cards/card-interface';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {CardServiceService} from '../../card-service.service';
+import {CardServiceService} from '../../../card-service.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-admin-form',
-  templateUrl: './admin-form.component.html',
-  styleUrls: ['./admin-form.component.css']
+  selector: 'app-card-form',
+  templateUrl: './card-form.component.html',
+  styleUrls: ['./card-form.component.css']
 })
-export class AdminFormComponent implements OnInit, OnChanges {
+export class CardFormComponent implements OnInit, OnChanges {
   @Input() card: CardInterface;
   @Input() editing: false;
   @Output() submitCard = new EventEmitter<CardInterface>();

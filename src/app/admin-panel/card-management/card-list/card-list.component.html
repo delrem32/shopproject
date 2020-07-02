@@ -2,7 +2,7 @@
   <ng-container *ngIf="cardsList$ |async as cards; else loading">
     <div class="item" *ngFor="let card of cards">
       <div class="ui grid">
-        <div class="fourteen wide column" [routerLink]="['/edit', card._id]">
+        <div class="fourteen wide column" [routerLink]="['edit', card._id]">
           <img class="ui tiny image left floated"
                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Icecat1-300x300.svg">
           <div class="content">

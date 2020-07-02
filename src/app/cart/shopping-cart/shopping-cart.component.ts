@@ -15,6 +15,7 @@ import {CardServiceService} from '../../card-service.service';
 export class ShoppingCartComponent implements OnInit, OnDestroy {
   cardsList$: Observable<CardInterface[]>;
   cards;
+  cartLenght;
   refresh$ = new Subject() as Subject<CardInterface>;
 
   constructor(private orderService: ShoppingCartService,
@@ -43,6 +44,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .pipe(flatMap(() => this.profileService.profile$))
       .pipe(pluck('cart'))
+      .pipe(filter((cart) => {this.cartLenght=cart.length; return cart.length !== 0}))
       .pipe(flatMap((ids: string[]) => combineLatest(
         ids.map(id => this.cardService.getSingleCard(id)))));
   }

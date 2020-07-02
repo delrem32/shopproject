@@ -1,4 +1,0 @@
-<h1>Card bearbeiten</h1>
-<ng-container *ngIf="card$|async as card">
-  <app-admin-form *ngIf="card" (submitCard)="updateCard($event)" [card]="card" [editing]="true"></app-admin-form>
-</ng-container>

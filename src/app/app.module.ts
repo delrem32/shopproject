@@ -29,6 +29,7 @@ import {JwtInterceptor} from './jwt.interceptor';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ShoppingCartComponent } from './cart/shopping-cart/shopping-cart.component';
+import { AntModule } from './shared/ant/ant.module';
 
 @NgModule({
   declarations: [
@@ -50,26 +51,9 @@ import { ShoppingCartComponent } from './cart/shopping-cart/shopping-cart.compon
     HttpClientModule,
     CardsModule,
     AdminPanelModule,
-    NzLayoutModule,
-    NzMenuModule,
-    NzIconModule,
     BrowserAnimationsModule,
-    NzCardModule,
-    NzGridModule,
-    NzBadgeModule,
-    NzFormModule,
     ReactiveFormsModule,
-    NzInputModule,
-    NzButtonModule,
-    NzSelectModule,
-    NzToolTipModule,
-    NzCheckboxModule,
-    NzNotificationModule,
-    NzCarouselModule,
-    NzTabsModule,
-    NzDropDownModule,
-    NzListModule,
-    NzDividerModule
+    AntModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}],
   exports: [

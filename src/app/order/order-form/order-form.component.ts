@@ -12,7 +12,7 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./order-form.component.css']
 })
 export class OrderFormComponent implements OnInit {
-  @Input() order: OrderInterface | Observable<CardInterface[]>[];
+  @Input() order: [OrderInterface, CardInterface[]];
   
   constructor() {
 

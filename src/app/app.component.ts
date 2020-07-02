@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {LoginService} from './login.service';
 import {filter, flatMap, take} from 'rxjs/operators';
 import {Router} from '@angular/router';
@@ -10,14 +10,19 @@ import {ProfileService} from './profile.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'shopproject';
-  authorized$ = this.authService.isAuthorized$;
+  authorized$;
   profile$ = this.profileService.profile$;
 
 
   ngOnInit(): void {
     this.initApp();
+  }
+  ngOnDestroy(): void {
+    if(this.authService.isAuthorized$) {
+      this.authorized$.unsubscribe();
+    }
   }
 
   constructor(private authService: LoginService, private router: Router, private profileService: ProfileService) {
@@ -25,7 +30,7 @@ export class AppComponent implements OnInit {
   }
 
   initApp() {
-    this.authService.isAuthorized$
+    this.authorized$ = this.authService.isAuthorized$
       .pipe(
         take(1),
         filter(authorized => !authorized),

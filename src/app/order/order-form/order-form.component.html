@@ -3,13 +3,23 @@
     [nzHeader]="headerTpl"
     [nzShowArrow]="false"
   >
-    <app-cart-form *ngFor="let card of order[1]|async" [editable]="false" [card]="card" ></app-cart-form>
+    <app-cart-form *ngFor="let card of order[1]" [editable]="false" [card]="card"></app-cart-form>
   </nz-collapse-panel>
 </nz-collapse>
-<ng-template #headerTpl>
+<ng-template #headerTpl >
   <div nz-row>
-    <div nz-col nzSpan="4">
-      <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i>
+    <div nz-col nzSpan="4" >
+      <div [ngSwitch]="order[0].delivery_status" *ngIf="order[0].status === 'active'">
+        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="''" *ngSwitchCase="'bearbeitung'"></i>
+        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#D2C200'" *ngSwitchCase="'sendet'"></i>
+        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'" *ngSwitchCase="'geliefert'"></i>
+      </div>
+      <div *ngIf="order[0].status === ('completed')">
+        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#ff0000'"></i>
+      </div>
+      <div *ngIf="order[0].status === ('canceled')">
+        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i>
+      </div>
     </div>
     <div nz-col nzSpan="12">
       <div nz-row>Nummer: {{order[0]._id}}</div>
