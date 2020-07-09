@@ -1,19 +1,27 @@
 <div nz-row>
-  <div nz-col nzSpan="5">
-    <img style="width: 100%; height: auto;" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"/>
-  </div>
-  <div nz-col nzSpan="1"></div>
-  <div nz-col nzSpan="12">
-    <div nz-row><a>{{ card.name }}</a></div>
-    <div nz-row>{{ card.description }}</div>
-  </div>
-  <div nz-col nzSpan="4">
-    <a [routerLink]="['/card', card._id]">info</a>
-    <nz-divider nzType="vertical"></nz-divider>
-    <a *ngIf="editable===true" (click)="deleteOrderFromCart(card._id)">delete</a>
-  </div>
-  <div nz-col nzSpan="2">
-    {{4.99 | currency: 'EUR'}}
-  </div>
-  <nz-divider></nz-divider>
+    <div nz-col nzSpan="5">
+        <img
+            style="width: 100%; height: auto;"
+            alt="logo"
+            src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+        />
+    </div>
+    <div nz-col nzSpan="1"></div>
+    <div nz-col nzSpan="12">
+        <div nz-row>
+            <a>{{ card.name }}</a>
+        </div>
+        <div nz-row>{{ card.description }}</div>
+    </div>
+    <div nz-col nzSpan="4">
+        <a [routerLink]="['/card', card._id]">info</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a *ngIf="editable === true" (click)="deleteOrderFromCart(card._id)"
+            >delete</a
+        >
+    </div>
+    <div nz-col nzSpan="2">
+        {{ 4.99 | currency: "EUR" }}
+    </div>
+    <nz-divider></nz-divider>
 </div>

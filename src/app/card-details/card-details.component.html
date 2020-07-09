@@ -1,43 +1,56 @@
-<ng-container *ngIf="card$|async as card">
-  <div nz-row>
-    <nz-col nzSpan="12" style="margin: auto;">
-      <nz-carousel [nzEffect]="effect">
-        <div nz-carousel-content *ngFor="let index of array">
-          <h3>{{ index }}</h3>
+<ng-container *ngIf="card$ | async as card">
+    <div nz-row>
+        <nz-col nzSpan="12" style="margin: auto;">
+            <nz-carousel [nzEffect]="effect">
+                <div nz-carousel-content *ngFor="let index of array">
+                    <h3>{{ index }}</h3>
+                </div>
+            </nz-carousel>
+        </nz-col>
+    </div>
+    <div nz-row style="margin-top: 20px;">
+        <div nz-col nzSpan="18">
+            <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+                <nz-tab nzTitle="Description">
+                    <p style="word-break: break-all;">{{ card.description }}</p>
+                </nz-tab>
+                <nz-tab nzTitle="Technical Info"> Technical Info</nz-tab>
+                <nz-tab nzTitle="Feedback"> Feedback</nz-tab>
+            </nz-tabset>
         </div>
-      </nz-carousel>
-    </nz-col>
-  </div>
-  <div nz-row style="margin-top: 20px;">
-    <div nz-col nzSpan="18">
-      <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
-        <nz-tab nzTitle="Description">
-        <p style="word-break: break-all;">{{card.description}}</p>
-        </nz-tab>
-        <nz-tab nzTitle="Technical Info"> Technical Info</nz-tab>
-        <nz-tab nzTitle="Feedback"> Feedback</nz-tab>
-      </nz-tabset>
+        <div
+            nz-col
+            nzSpan="6"
+            style="background-color: #f0f2f5; margin-top: 39px;"
+        >
+            <nz-card>
+                <p>
+                    Shipment in: 2-5 Tage<a style="margin-left: 5px;"
+                        >Details</a
+                    >
+                </p>
+                <p>Verfügbar: Auf Lager</p>
+                noch
+                <p style="color: green;">{{ card.quantity }}</p>
+                <p nz-row>Lieferung kostet: KOSTENLOS</p>
+                <p nz-row>
+                    <button
+                        nz-button
+                        nzType="primary"
+                        style="margin: auto;"
+                        (click)="addToOrderList(card._id)"
+                    >
+                        <i nz-icon nzType="shopping-cart"></i>
+                        In den Einkaufswagen
+                    </button>
+                </p>
+            </nz-card>
+        </div>
     </div>
-    <div nz-col nzSpan="6" style="background-color:#f0f2f5; margin-top: 39px;">
-      <nz-card>
-        <p>Shipment in: 2-5 Tage<a style="margin-left: 5px">Details</a></p>
-        <p>Verfügbar: Auf Lager</p>
-        noch<p style="color: green;"> {{card.quantity}}</p>
-        <p nz-row>Lieferung kostet: KOSTENLOS</p>
-        <p nz-row>
-          <button nz-button nzType="primary" style="margin: auto;" (click)="addToOrderList(card._id)">
-            <i nz-icon nzType="shopping-cart"></i>
-            In den Einkaufswagen
-          </button>
-        </p>
-      </nz-card>
+    <div nz-row style="margin-top: 100px;">
+        <div nz-col nzSpan="6">col-6</div>
+        <div nz-col nzSpan="6">col-6</div>
+        <div nz-col nzSpan="6">col-6</div>
+        <div nz-col nzSpan="6">col-6</div>
     </div>
-  </div>
-  <div nz-row style="margin-top: 100px;">
-    <div nz-col nzSpan="6">col-6</div>
-    <div nz-col nzSpan="6">col-6</div>
-    <div nz-col nzSpan="6">col-6</div>
-    <div nz-col nzSpan="6">col-6</div>
-  </div>
 </ng-container>
-

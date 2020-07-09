@@ -1,22 +1,38 @@
 <nz-layout>
-  <nz-sider nzCollapsible nzWidth="160px">
-    <div class="logo"></div>
-    <app-mainmenu></app-mainmenu>
-  </nz-sider>
-  <nz-layout>
-    <nz-header>
-        <div nz-row>
-          <div nz-col nzSpan="4"></div>
-          <div nz-col nzSpan="4"><button style="margin: 10px; float: right;" nz-button nzType="primary" *ngIf="!(profile$|async)">SingUp</button></div>
-          <div nz-col nzSpan="16"><app-user-login style="margin: 10px; float: right;"></app-user-login>
-            <app-shopping-cart style="float: right;" *ngIf="profile$|async"></app-shopping-cart></div>
-        </div>
-    </nz-header>
-    <nz-content>
-      <div class="inner-content">
-        <router-outlet></router-outlet>
-      </div>
-    </nz-content>
-    <nz-footer>Andy A ©2020 Implement By Angular</nz-footer>
-  </nz-layout>
+    <nz-sider nzCollapsible nzWidth="160px">
+        <div class="logo"></div>
+        <app-mainmenu></app-mainmenu>
+    </nz-sider>
+    <nz-layout>
+        <nz-header>
+            <div nz-row>
+                <div nz-col nzSpan="4"></div>
+                <div nz-col nzSpan="4">
+                    <button
+                        style="margin: 10px; float: right;"
+                        nz-button
+                        nzType="primary"
+                        *ngIf="!(profile$ | async)"
+                    >
+                        SingUp
+                    </button>
+                </div>
+                <div nz-col nzSpan="16">
+                    <app-user-login
+                        style="margin: 10px; float: right;"
+                    ></app-user-login>
+                    <app-shopping-cart
+                        style="float: right;"
+                        *ngIf="profile$ | async"
+                    ></app-shopping-cart>
+                </div>
+            </div>
+        </nz-header>
+        <nz-content>
+            <div class="inner-content">
+                <router-outlet></router-outlet>
+            </div>
+        </nz-content>
+        <nz-footer>Andy A ©2020 Implement By Angular</nz-footer>
+    </nz-layout>
 </nz-layout>

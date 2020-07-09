@@ -1,49 +1,83 @@
-<form nz-form [nzLayout]="'inline'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
-  <nz-form-item *ngIf="!isLogged()">
-    <nz-form-control [nzErrorTip]="emailErrorTmp" [nzSpan]="24">
-      <nz-input-group nzPrefixIcon="user">
-        <input formControlName="email" nz-input placeholder="Username"/>
-        <ng-template #emailErrorTmp let-control>
-          <ng-container *ngIf="control.hasError('email')">
-            The input is not valid E-mail!
-          </ng-container>
-          <ng-container *ngIf="control.hasError('required')">
-            Please input your E-mail!
-          </ng-container>
-          <ng-container *ngIf="control.hasError('incorrect')">
-            Login oder Password ist incorrect.
-          </ng-container>
-        </ng-template>
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item *ngIf="!isLogged()">
-    <nz-form-control [nzErrorTip]="passwordErrorTmp" [nzSpan]="24">
-      <nz-input-group nzPrefixIcon="lock">
-        <input formControlName="password" nz-input type="password" placeholder="Password"/>
-        <ng-template #passwordErrorTmp let-control>
-          <ng-container *ngIf="control.hasError('required')">
-            Please confirm your password!
-          </ng-container>
-          <ng-container *ngIf="control.hasError('confirm')">
-            Password is inconsistent!
-          </ng-container>
-        </ng-template>
-      </nz-input-group>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-control>
-      <button nz-button
-              nzType="primary"
-              [disabled]="!validateForm.valid" *ngIf="!isLogged()">Log in
-      </button>
-      <div style="color: white; border-width: medium;" *ngIf="profile$|async as profile">Hello,
-        <a style="margin-right: 10px;" [routerLink]="['/profile', profile._id]"><button nz-button nzType="primary" nzShape="circle"><i nz-icon nzType="user"></i></button> {{profile.email}}
-        </a>  
-        <button nz-button nzType="danger" (click)="logout()" *ngIf="isLogged()">
-          Logout</button>
-      </div>
-    </nz-form-control>
-  </nz-form-item>
+<form
+    nz-form
+    [nzLayout]="'inline'"
+    [formGroup]="validateForm"
+    (ngSubmit)="submitForm()"
+>
+    <nz-form-item *ngIf="!isLogged()">
+        <nz-form-control [nzErrorTip]="emailErrorTmp" [nzSpan]="24">
+            <nz-input-group nzPrefixIcon="user">
+                <input
+                    formControlName="email"
+                    nz-input
+                    placeholder="Username"
+                />
+                <ng-template #emailErrorTmp let-control>
+                    <ng-container *ngIf="control.hasError('email')">
+                        The input is not valid E-mail!
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('required')">
+                        Please input your E-mail!
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('incorrect')">
+                        Login oder Password ist incorrect.
+                    </ng-container>
+                </ng-template>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="!isLogged()">
+        <nz-form-control [nzErrorTip]="passwordErrorTmp" [nzSpan]="24">
+            <nz-input-group nzPrefixIcon="lock">
+                <input
+                    formControlName="password"
+                    nz-input
+                    type="password"
+                    placeholder="Password"
+                />
+                <ng-template #passwordErrorTmp let-control>
+                    <ng-container *ngIf="control.hasError('required')">
+                        Please confirm your password!
+                    </ng-container>
+                    <ng-container *ngIf="control.hasError('confirm')">
+                        Password is inconsistent!
+                    </ng-container>
+                </ng-template>
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control>
+            <button
+                nz-button
+                nzType="primary"
+                [disabled]="!validateForm.valid"
+                *ngIf="!isLogged()"
+            >
+                Log in
+            </button>
+            <div
+                style="color: white; border-width: medium;"
+                *ngIf="profile$ | async as profile"
+            >
+                Hello,
+                <a
+                    style="margin-right: 10px;"
+                    [routerLink]="['/profile', profile._id]"
+                    ><button nz-button nzType="primary" nzShape="circle">
+                        <i nz-icon nzType="user"></i>
+                    </button>
+                    {{ profile.email }}
+                </a>
+                <button
+                    nz-button
+                    nzType="danger"
+                    (click)="logout()"
+                    *ngIf="isLogged()"
+                >
+                    Logout
+                </button>
+            </div>
+        </nz-form-control>
+    </nz-form-item>
 </form>

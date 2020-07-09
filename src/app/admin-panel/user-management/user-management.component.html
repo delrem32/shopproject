@@ -1,1 +1,6 @@
-<p>user-management works!</p>
+<nz-upload
+    [nzAction]="'http://localhost:5000/files'"
+    (nzChange)="handleChange($event)"
+>
+    <button nz-button><i nz-icon nzType="upload"></i>Click to Upload</button>
+</nz-upload>

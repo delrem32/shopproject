@@ -1,23 +1,19 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {OrderInterface} from '../../shared/orders/order-interface';
-import {ProfileService} from '../../profile.service';
-import {CardServiceService} from '../../card-service.service';
-import {CardInterface} from '../../shared/cards/card-interface';
-import {Observable} from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Component, Input, OnInit } from "@angular/core";
+import { OrderInterface } from "../../shared/orders/order-interface";
+import { ProfileService } from "../../profile.service";
+import { CardServiceService } from "../../card-service.service";
+import { CardInterface } from "../../shared/cards/card-interface";
+import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 
 @Component({
-  selector: 'app-order-form',
-  templateUrl: './order-form.component.html',
-  styleUrls: ['./order-form.component.css']
+    selector: "app-order-form",
+    templateUrl: "./order-form.component.html",
+    styleUrls: ["./order-form.component.css"],
 })
 export class OrderFormComponent implements OnInit {
-  @Input() order: [OrderInterface, CardInterface[]];
-  
-  constructor() {
+    @Input() order: [OrderInterface, CardInterface[]];
 
-  }
-  ngOnInit(): void {
-  }
-
+    constructor() {}
+    ngOnInit(): void {}
 }

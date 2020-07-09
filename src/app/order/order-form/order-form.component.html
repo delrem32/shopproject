@@ -1,38 +1,69 @@
 <nz-collapse>
-  <nz-collapse-panel
-    [nzHeader]="headerTpl"
-    [nzShowArrow]="false"
-  >
-    <app-cart-form *ngFor="let card of order[1]" [editable]="false" [card]="card"></app-cart-form>
-  </nz-collapse-panel>
+    <nz-collapse-panel [nzHeader]="headerTpl" [nzShowArrow]="false">
+        <app-cart-form
+            *ngFor="let card of order[1]"
+            [editable]="false"
+            [card]="card"
+        ></app-cart-form>
+    </nz-collapse-panel>
 </nz-collapse>
-<ng-template #headerTpl >
-  <div nz-row>
-    <div nz-col nzSpan="4" >
-      <div [ngSwitch]="order[0].delivery_status" *ngIf="order[0].status === 'active'">
-        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="''" *ngSwitchCase="'bearbeitung'"></i>
-        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#D2C200'" *ngSwitchCase="'sendet'"></i>
-        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'" *ngSwitchCase="'geliefert'"></i>
-      </div>
-      <div *ngIf="order[0].status === ('completed')">
-        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#ff0000'"></i>
-      </div>
-      <div *ngIf="order[0].status === ('canceled')">
-        <i nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"></i>
-      </div>
+<ng-template #headerTpl>
+    <div nz-row>
+        <div nz-col nzSpan="4">
+            <div
+                [ngSwitch]="order[0].delivery_status"
+                *ngIf="order[0].status === 'active'"
+            >
+                <i
+                    nz-icon
+                    [nzType]="'check-circle'"
+                    [nzTheme]="'twotone'"
+                    [nzTwotoneColor]="''"
+                    *ngSwitchCase="'bearbeitung'"
+                ></i>
+                <i
+                    nz-icon
+                    [nzType]="'check-circle'"
+                    [nzTheme]="'twotone'"
+                    [nzTwotoneColor]="'#D2C200'"
+                    *ngSwitchCase="'sendet'"
+                ></i>
+                <i
+                    nz-icon
+                    [nzType]="'check-circle'"
+                    [nzTheme]="'twotone'"
+                    [nzTwotoneColor]="'#52c41a'"
+                    *ngSwitchCase="'geliefert'"
+                ></i>
+            </div>
+            <div *ngIf="order[0].status === 'completed'">
+                <i
+                    nz-icon
+                    [nzType]="'check-circle'"
+                    [nzTheme]="'twotone'"
+                    [nzTwotoneColor]="'#ff0000'"
+                ></i>
+            </div>
+            <div *ngIf="order[0].status === 'canceled'">
+                <i
+                    nz-icon
+                    [nzType]="'check-circle'"
+                    [nzTheme]="'twotone'"
+                    [nzTwotoneColor]="'#52c41a'"
+                ></i>
+            </div>
+        </div>
+        <div nz-col nzSpan="12">
+            <div nz-row>Nummer: {{ order[0]._id }}</div>
+            <div nz-row>Date of Order: {{ order[0].order_date | date }}</div>
+        </div>
+        <div nz-col nzSpan="6">
+            <p>{{ order[0].sum | currency: "EUR" }}</p>
+        </div>
+        <div nz-col nzSpan="2">
+            <a>
+                <i nz-icon nzType="down-circle" nzTheme="outline"></i>
+            </a>
+        </div>
     </div>
-    <div nz-col nzSpan="12">
-      <div nz-row>Nummer: {{order[0]._id}}</div>
-      <div nz-row>Date of Order: {{order[0].order_date | date}}</div>
-    </div>
-    <div nz-col nzSpan="6">
-      <p>{{order[0].sum | currency: 'EUR'}}</p>
-    </div>
-    <div nz-col nzSpan="2">
-      <a>
-        <i nz-icon nzType="down-circle" nzTheme="outline"></i>
-      </a>
-    </div>
-  </div>
 </ng-template>
-

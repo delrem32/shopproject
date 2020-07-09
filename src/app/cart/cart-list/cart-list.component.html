@@ -1,9 +1,28 @@
-<div *ngIf="profile$|async">
-  <ng-container *ngIf="cardsList$|async as cards">
-      <app-cart-form  *ngFor="let card of cards" [card]="card" [editable]="true"></app-cart-form>
-  </ng-container>
-  <div *ngIf="arrayCardsLenght === 0 || null || undefined" class="emptyCart">Es gibt keinen einzigen Artikel in Ihrem Warenkorb.</div>
-  <nz-row>
-    <button *ngIf="arrayCardsLenght>0" nz-button nzType="primary" (click)="createOrder()" [disabled]="!(deliveryAdress$|async) || (arrayCardsLenght === 0 || null || undefined)">Go to Pay</button>
-  </nz-row>
+<div *ngIf="profile$ | async">
+    <ng-container *ngIf="cardsList$ | async as cards">
+        <app-cart-form
+            *ngFor="let card of cards"
+            [card]="card"
+            [editable]="true"
+        ></app-cart-form>
+    </ng-container>
+    <div *ngIf="arrayCardsLenght === 0 || null || undefined" class="emptyCart">
+        Es gibt keinen einzigen Artikel in Ihrem Warenkorb.
+    </div>
+    <nz-row>
+        <button
+            *ngIf="arrayCardsLenght > 0"
+            nz-button
+            nzType="primary"
+            (click)="createOrder()"
+            [disabled]="
+                !(deliveryAdress$ | async) ||
+                arrayCardsLenght === 0 ||
+                null ||
+                undefined
+            "
+        >
+            Go to Pay
+        </button>
+    </nz-row>
 </div>

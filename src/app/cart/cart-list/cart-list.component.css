@@ -1,14 +1,14 @@
 button {
-  margin: auto;
-  min-height: 50px;
-  min-width: 150px;
+    margin: auto;
+    min-height: 50px;
+    min-width: 150px;
 }
 
 .emptyCart {
-  margin-left: 40%;
-  margin-right: 30%;
-  margin-top: 15%;
-  margin-bottom: 15%;
-  color: lightgrey;
-  font-size: 20px;
+    margin-left: 40%;
+    margin-right: 30%;
+    margin-top: 15%;
+    margin-bottom: 15%;
+    color: lightgrey;
+    font-size: 20px;
 }

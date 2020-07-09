@@ -1,12 +1,13 @@
 <div nz-col [nzSpan]="8">
-  <nz-card nzHoverable [nzCover]="coverTemplate" nzTitle="{{card.name}}">
-    <p>{{card.type}}</p>
-    <p>{{card.description}}</p>
-    <p>Quantity:{{card.quantity}}</p>
-  </nz-card>
-  <ng-template #coverTemplate>
-    <img alt="example" src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Icecat1-300x300.svg" />
-  </ng-template>
+    <nz-card nzHoverable [nzCover]="coverTemplate" nzTitle="{{ card.name }}">
+        <p>{{ card.type }}</p>
+        <p>{{ card.description }}</p>
+        <p>Quantity:{{ card.quantity }}</p>
+    </nz-card>
+    <ng-template #coverTemplate>
+        <img
+            alt="example"
+            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Icecat1-300x300.svg"
+        />
+    </ng-template>
 </div>
-
-

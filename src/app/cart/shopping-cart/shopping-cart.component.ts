@@ -1,57 +1,78 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {ShoppingCartService} from '../../shopping-cart.service';
-import {ProfileService, UserProfile} from '../../profile.service';
-import {combineLatest, BehaviorSubject, Observable, of, Subject} from 'rxjs';
-import {delay, filter, flatMap, pluck, scan, startWith, take, tap} from 'rxjs/operators';
-import {CardInterface} from '../../shared/cards/card-interface';
-import {CardServiceService} from '../../card-service.service';
-
+import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
+import { ShoppingCartService } from "../../shopping-cart.service";
+import { ProfileService, UserProfile } from "../../profile.service";
+import { combineLatest, BehaviorSubject, Observable, of, Subject } from "rxjs";
+import {
+    delay,
+    filter,
+    flatMap,
+    pluck,
+    scan,
+    startWith,
+    take,
+    tap,
+} from "rxjs/operators";
+import { CardInterface } from "../../shared/cards/card-interface";
+import { CardServiceService } from "../../card-service.service";
 
 @Component({
-  selector: 'app-shopping-cart',
-  templateUrl: './shopping-cart.component.html',
-  styleUrls: ['./shopping-cart.component.css']
+    selector: "app-shopping-cart",
+    templateUrl: "./shopping-cart.component.html",
+    styleUrls: ["./shopping-cart.component.css"],
 })
 export class ShoppingCartComponent implements OnInit, OnDestroy {
-  cardsList$: Observable<CardInterface[]>;
-  cards;
-  cartLenght;
-  refresh$ = new Subject() as Subject<CardInterface>;
+    cardsList$: Observable<CardInterface[]>;
+    cards;
+    cartLenght;
+    refresh$ = new Subject() as Subject<CardInterface>;
 
-  constructor(private orderService: ShoppingCartService,
-              private profileService: ProfileService,
-              private cardService: CardServiceService) {
-  }
+    constructor(
+        private orderService: ShoppingCartService,
+        private profileService: ProfileService,
+        private cardService: CardServiceService
+    ) {}
 
-  isLogged() {
-    if (!localStorage.getItem('token')) {
-      return false;
-    } else {
-      return true;
+    isLogged() {
+        if (!localStorage.getItem("token")) {
+            return false;
+        } else {
+            return true;
+        }
     }
-  }
 
-  ngOnInit(): void {
-    this.initCart();
-  }
+    ngOnInit(): void {
+        this.initCart();
+    }
 
-  ngOnDestroy(): void {
-  }
+    ngOnDestroy(): void {}
 
-  initCart() {
-    // profile$ -> null ??
-    this.cardsList$ = this.refresh$.asObservable().pipe(startWith(null))
-      .pipe(take(1))
-      .pipe(flatMap(() => this.profileService.profile$))
-      .pipe(pluck('cart'))
-      .pipe(filter((cart) => {this.cartLenght=cart.length; return cart.length !== 0}))
-      .pipe(flatMap((ids: string[]) => combineLatest(
-        ids.map(id => this.cardService.getSingleCard(id)))));
-  }
+    initCart() {
+        // profile$ -> null ??
+        this.cardsList$ = this.refresh$
+            .asObservable()
+            .pipe(startWith(null))
+            .pipe(take(1))
+            .pipe(flatMap(() => this.profileService.profile$))
+            .pipe(pluck("cart"))
+            .pipe(
+                filter((cart) => {
+                    this.cartLenght = cart.length;
+                    return cart.length !== 0;
+                })
+            )
+            .pipe(
+                flatMap((ids: string[]) =>
+                    combineLatest(
+                        ids.map((id) => this.cardService.getSingleCard(id))
+                    )
+                )
+            );
+    }
 
-  deleteOrderFromCart(id: string) {
-    return this.orderService.deleteOrdersFromCartByPatch({cart: [id]})
-      .pipe(tap(() => this.refresh$.next()))
-      .subscribe();
-  }
+    deleteOrderFromCart(id: string) {
+        return this.orderService
+            .deleteOrdersFromCartByPatch({ cart: [id] })
+            .pipe(tap(() => this.refresh$.next()))
+            .subscribe();
+    }
 }

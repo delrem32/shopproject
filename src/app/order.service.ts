@@ -1,30 +1,31 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {OrderInterface} from './shared/orders/order-interface';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { OrderInterface } from "./shared/orders/order-interface";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: "root",
 })
 export class OrderService {
-  private apiURL = 'http://localhost:5000/orders';
+    private apiURL = "http://localhost:5000/orders";
 
-  constructor(private http: HttpClient) {
-  }
+    constructor(private http: HttpClient) {}
 
-  getOrders(): Observable<OrderInterface[]> {
-    return this.http.get<OrderInterface[]>(this.apiURL);
-  }
+    getOrders(): Observable<OrderInterface[]> {
+        return this.http.get<OrderInterface[]>(this.apiURL);
+    }
 
-  getSingleOrder(orderId: string): Observable<OrderInterface> {
-    return this.http.get<OrderInterface>(`${this.apiURL}/${orderId}`);
-  }
+    getSingleOrder(orderId: string): Observable<OrderInterface> {
+        return this.http.get<OrderInterface>(`${this.apiURL}/${orderId}`);
+    }
 
-  createOrder(payload: OrderInterface): Observable<OrderInterface> {
-    return this.http.post<OrderInterface>(this.apiURL, payload);
-  }
+    createOrder(payload: OrderInterface): Observable<OrderInterface> {
+        return this.http.post<OrderInterface>(this.apiURL, payload);
+    }
 
-  getOrdersByUser(id: string): Observable<OrderInterface[]> {
-    return this.http.post<OrderInterface[]>(`${this.apiURL}/ordersByUser`, {delivery_to: id});
-  }
+    getOrdersByUser(id: string): Observable<OrderInterface[]> {
+        return this.http.post<OrderInterface[]>(`${this.apiURL}/ordersByUser`, {
+            delivery_to: id,
+        });
+    }
 }
