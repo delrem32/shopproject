@@ -39,7 +39,7 @@ import { JwtInterceptor } from "./jwt.interceptor";
 import { UserRegistrationComponent } from "./user-registration/user-registration.component";
 import { UserProfileComponent } from "./user-profile/user-profile.component";
 import { ShoppingCartComponent } from "./cart/shopping-cart/shopping-cart.component";
-import { AntModule } from "./shared/ant/ant.module";
+import { SharedModule } from "./shared/shared.module";
 
 @NgModule({
     declarations: [
@@ -63,7 +63,7 @@ import { AntModule } from "./shared/ant/ant.module";
         AdminPanelModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        AntModule,
+        SharedModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, HostBinding } from "@angular/core";
 import { Observable } from "rxjs";
 import { FilesService } from "../../files.service";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -11,11 +11,12 @@ import { flatMap, map, share } from "rxjs/operators";
 })
 export class ManageImageComponent implements OnInit {
     @Input() id: string;
+    @Input() imgType: "normalImg" | "previewImg" | "carouselImg";
     src$: Observable<any>;
     constructor(
         private filesService: FilesService,
         private domSanitizer: DomSanitizer
-    ) {}
+    ) {    }
 
     ngOnInit(): void {
         this.src$ = this.filesService
@@ -23,7 +24,6 @@ export class ManageImageComponent implements OnInit {
             .pipe(flatMap(this.filesService.readAsDataURL))
             .pipe(
                 map((dataURL: string) => {
-                    debugger;
                     return this.domSanitizer.bypassSecurityTrustUrl(dataURL);
                 })
             )

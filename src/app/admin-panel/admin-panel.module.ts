@@ -9,13 +9,13 @@ import { UserManagementComponent } from "./user-management/user-management.compo
 import { RoleManagementComponent } from "./role-management/role-management.component";
 import { AntModule } from "../shared/ant/ant.module";
 import { ManageImageComponent } from "../shared/manage-image/manage-image.component";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
     declarations: [
         OrderManagementComponent,
         UserManagementComponent,
-        RoleManagementComponent,
-        ManageImageComponent,
+        RoleManagementComponent
     ],
     imports: [
         CommonModule,
@@ -23,6 +23,7 @@ import { ManageImageComponent } from "../shared/manage-image/manage-image.compon
         ReactiveFormsModule,
         NzAffixModule,
         AntModule,
+        SharedModule
     ],
 })
 export class AdminPanelModule {}

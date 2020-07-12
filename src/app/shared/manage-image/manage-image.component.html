@@ -1,1 +1,3 @@
-<img [src]="src$ | async" />
+<img *ngIf="imgType === 'previewImg'" class="previewImg" [src]="src$ | async" />
+<img *ngIf="imgType === 'carouselImg'" class="carouselImg" [src]="src$ | async" />
+<img *ngIf="imgType === 'normalImg'" class="normalImg" [src]="src$ | async" />
