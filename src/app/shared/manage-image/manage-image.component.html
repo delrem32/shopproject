@@ -1,3 +1,11 @@
 <img *ngIf="imgType === 'previewImg'" class="previewImg" [src]="src$ | async" />
-<img *ngIf="imgType === 'carouselImg'" class="carouselImg" [src]="src$ | async" />
-<img *ngIf="imgType === 'normalImg'" class="normalImg" [src]="src$ | async" />
+<img *ngIf="imgType === 'normalImg'" class="normalImg center" [src]="src$ | async" />
+<div *ngIf="imgType === 'carouselImg'" [style.background-image]="src$|async" 
+style="
+width: 100%; 
+height: 100%; 
+background-size: contain; 
+background-repeat: no-repeat;
+background-position: center;
+">
+</div>

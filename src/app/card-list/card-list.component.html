@@ -20,10 +20,9 @@
             </p>
         </nz-card>
         <ng-template #coverTemplate>
-            <img
-                alt="example"
-                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Icecat1-300x300.svg"
-            />
+            <div style="min-height: 300px; min-width: 300px; display: flex; align-items: center;">
+                <app-manage-image [imgType]="'normalImg'" [id]="card.files[0]"></app-manage-image>
+            </div>
         </ng-template>
     </div>
 </div>

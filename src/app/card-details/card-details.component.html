@@ -2,8 +2,11 @@
     <div nz-row>
         <nz-col nzSpan="12" style="margin: auto;">
             <nz-carousel [nzEffect]="effect">
-                <div nz-carousel-content *ngFor="let index of array">
-                    <h3>{{ index }}</h3>
+                <div nz-carousel-content *ngFor="let file of card.files" 
+                style="background-color: white;
+                border-top: solid 1px lightgray;
+                border-bottom: solid 1px lightgray;">
+                    <app-manage-image [imgType]="'carouselImg'" [id]="file"></app-manage-image>
                 </div>
             </nz-carousel>
         </nz-col>

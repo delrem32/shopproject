@@ -13,6 +13,7 @@ export class ManageImageComponent implements OnInit {
     @Input() id: string;
     @Input() imgType: "normalImg" | "previewImg" | "carouselImg";
     src$: Observable<any>;
+    bypassStyle;
     constructor(
         private filesService: FilesService,
         private domSanitizer: DomSanitizer
@@ -24,7 +25,11 @@ export class ManageImageComponent implements OnInit {
             .pipe(flatMap(this.filesService.readAsDataURL))
             .pipe(
                 map((dataURL: string) => {
-                    return this.domSanitizer.bypassSecurityTrustUrl(dataURL);
+                    if(this.imgType === "carouselImg") {
+                       return this.domSanitizer.bypassSecurityTrustStyle(`url(${dataURL})`);
+                    } else {
+                        return this.domSanitizer.bypassSecurityTrustUrl(dataURL);
+                    }
                 })
             )
             .pipe(share());
