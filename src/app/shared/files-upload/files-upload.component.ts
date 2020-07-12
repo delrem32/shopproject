@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NzMessageService } from "ng-zorro-antd/message";
 import { UploadFile, UploadChangeParam } from "ng-zorro-antd/upload";
 import { FilesService } from '../../files.service';
 import { tap, map, flatMap, takeUntil } from 'rxjs/operators';
 import { combineLatest, Subject } from 'rxjs';
+import { FileInterface } from '../file';
 
 @Component({
   selector: 'app-files-upload',
@@ -12,6 +13,7 @@ import { combineLatest, Subject } from 'rxjs';
   styleUrls: ['./files-upload.component.css']
 })
 export class FilesUploadComponent implements OnDestroy {
+  @Output() fileId = new EventEmitter();
   uploading = false;
   fileList: UploadFile[] = [];
   previewVisible = false;
@@ -34,13 +36,17 @@ export class FilesUploadComponent implements OnDestroy {
 
       this.fileList.forEach(
           (file: any) => this.filesService.postImage(file)
-          .pipe(tap((ids)=>console.log(ids)))
+          .pipe(tap((fileResponse: FileInterface)=>{
+            this.fileId.emit(fileResponse._id);
+            console.log(fileResponse);
+          }))
           .pipe(takeUntil(this.destroy$))
           .subscribe(
               () => {
                   this.uploading = false;
                   this.fileList = [];
                   this.msg.success("upload successfully.");
+                  console.log(this.fileId)
               },
               () => {
                   this.uploading = false;

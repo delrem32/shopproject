@@ -21,6 +21,12 @@ export class CardFormComponent implements OnInit, OnChanges {
     @Input() editing: false;
     @Output() submitCard = new EventEmitter<CardInterface>();
     cardForm: FormGroup;
+    filesSet = new Set();
+
+    downloadedFiles(fileId: string) {
+        this.filesSet.add(fileId);
+        console.log(this.filesSet);
+    }
 
     constructor(private fb: FormBuilder) {}
 
@@ -52,6 +58,7 @@ export class CardFormComponent implements OnInit, OnChanges {
         const newCard: CardInterface = {
             ...formValue,
             id,
+            files: [...this.filesSet]
         };
         /*
          */
@@ -60,6 +67,12 @@ export class CardFormComponent implements OnInit, OnChanges {
     }
 
     private setCardValue(card: CardInterface) {
-        return this.cardForm.patchValue(card);
+        if(card.files.length !== 0) {
+            card.files.forEach((fileId: string) => this.filesSet.add(fileId));
+            return this.cardForm.patchValue(card);
+        } else {
+            return this.cardForm.patchValue(card);
+        }
+        
     }
 }

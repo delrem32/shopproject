@@ -8,6 +8,7 @@ import { CardEditComponent } from "./card-edit/card-edit.component";
 import { CardFormComponent } from "./card-form/card-form.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NzAffixModule } from "ng-zorro-antd";
+import { SharedModule } from "../../shared/shared.module";
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { NzAffixModule } from "ng-zorro-antd";
         CardManagementRoutingModule,
         ReactiveFormsModule,
         NzAffixModule,
+        SharedModule
     ],
 })
 export class CardManagementModule {}
