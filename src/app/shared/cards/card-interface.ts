@@ -4,7 +4,7 @@ export interface CardInterface {
     type?: string;
     description?: string;
     quantity: number;
-    image?: Thumbnail[];
+    files?: string[];
 }
 
 export interface Thumbnail {

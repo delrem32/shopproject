@@ -1,5 +1,5 @@
 <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
-    <button nz-button><i nz-icon nzType="upload"></i>Select File</button>
+    <button nz-button type="button"><i nz-icon nzType="upload"></i>Select File</button>
 </nz-upload>
 <button
     nz-button
@@ -8,6 +8,7 @@
     (click)="handleUpload()"
     [disabled]="fileList.length === 0 || undefined "
     style="margin-top: 16px;"
+    type="button"
 >
     {{ uploading ? "Uploading" : "Start Upload" }}
 </button>
