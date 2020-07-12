@@ -15,7 +15,7 @@ import { SharedModule } from "../shared/shared.module";
     declarations: [
         OrderManagementComponent,
         UserManagementComponent,
-        RoleManagementComponent
+        RoleManagementComponent,
     ],
     imports: [
         CommonModule,
@@ -23,7 +23,7 @@ import { SharedModule } from "../shared/shared.module";
         ReactiveFormsModule,
         NzAffixModule,
         AntModule,
-        SharedModule
+        SharedModule,
     ],
 })
 export class AdminPanelModule {}

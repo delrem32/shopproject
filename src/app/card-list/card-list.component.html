@@ -20,8 +20,18 @@
             </p>
         </nz-card>
         <ng-template #coverTemplate>
-            <div style="min-height: 300px; min-width: 300px; display: flex; align-items: center;">
-                <app-manage-image [imgType]="'normalImg'" [id]="card.files[0]"></app-manage-image>
+            <div
+                style="
+                    min-height: 300px;
+                    min-width: 300px;
+                    display: flex;
+                    align-items: center;
+                "
+            >
+                <app-manage-image
+                    [imgType]="'normalImg'"
+                    [id]="card.files[0]"
+                ></app-manage-image>
             </div>
         </ng-template>
     </div>

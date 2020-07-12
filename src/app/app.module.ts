@@ -63,7 +63,7 @@ import { SharedModule } from "./shared/shared.module";
         AdminPanelModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        SharedModule
+        SharedModule,
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

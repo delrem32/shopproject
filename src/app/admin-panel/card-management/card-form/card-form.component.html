@@ -13,14 +13,17 @@
     <label>Quantity:</label>
     <input formControlName="quantity" />
 
-    <label>Images:</label><br>
-    <app-files-upload (fileId) = "downloadedFiles($event)"></app-files-upload>
-    <label>Downloaded files:</label><br>
+    <label>Images:</label><br />
+    <app-files-upload (fileId)="downloadedFiles($event)"></app-files-upload>
+    <label>Downloaded files:</label><br />
     <ul *ngIf="filesSet !== undefined">
-       <li *ngFor="let file of filesSet"> 
-           <app-manage-image [imgType]="'previewImg'" [id]="file"></app-manage-image>
-       </li> 
+        <li *ngFor="let file of filesSet">
+            <app-manage-image
+                [imgType]="'previewImg'"
+                [id]="file"
+            ></app-manage-image>
+        </li>
     </ul>
-    
+
     <button class="ui button green" type="submit">Save</button>
 </form>

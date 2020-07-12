@@ -22,7 +22,7 @@ import { SharedModule } from "../../shared/shared.module";
         CardManagementRoutingModule,
         ReactiveFormsModule,
         NzAffixModule,
-        SharedModule
+        SharedModule,
     ],
 })
 export class CardManagementModule {}

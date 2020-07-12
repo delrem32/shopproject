@@ -58,7 +58,7 @@ export class CardFormComponent implements OnInit, OnChanges {
         const newCard: CardInterface = {
             ...formValue,
             id,
-            files: [...this.filesSet]
+            files: [...this.filesSet],
         };
         /*
          */
@@ -67,12 +67,11 @@ export class CardFormComponent implements OnInit, OnChanges {
     }
 
     private setCardValue(card: CardInterface) {
-        if(card.files.length !== 0) {
+        if (card.files.length !== 0) {
             card.files.forEach((fileId: string) => this.filesSet.add(fileId));
             return this.cardForm.patchValue(card);
         } else {
             return this.cardForm.patchValue(card);
         }
-        
     }
 }

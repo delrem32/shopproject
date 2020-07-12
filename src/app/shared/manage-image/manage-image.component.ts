@@ -17,7 +17,7 @@ export class ManageImageComponent implements OnInit {
     constructor(
         private filesService: FilesService,
         private domSanitizer: DomSanitizer
-    ) {    }
+    ) {}
 
     ngOnInit(): void {
         this.src$ = this.filesService
@@ -25,10 +25,14 @@ export class ManageImageComponent implements OnInit {
             .pipe(flatMap(this.filesService.readAsDataURL))
             .pipe(
                 map((dataURL: string) => {
-                    if(this.imgType === "carouselImg") {
-                       return this.domSanitizer.bypassSecurityTrustStyle(`url(${dataURL})`);
+                    if (this.imgType === "carouselImg") {
+                        return this.domSanitizer.bypassSecurityTrustStyle(
+                            `url(${dataURL})`
+                        );
                     } else {
-                        return this.domSanitizer.bypassSecurityTrustUrl(dataURL);
+                        return this.domSanitizer.bypassSecurityTrustUrl(
+                            dataURL
+                        );
                     }
                 })
             )
