@@ -1,6 +1,54 @@
-<nz-upload
-    [nzAction]="'http://localhost:5000/files'"
-    (nzChange)="handleChange($event)"
->
-    <button nz-button><i nz-icon nzType="upload"></i>Click to Upload</button>
-</nz-upload>
+<ng-container *ngIf="profiles$ | async as profiles">
+    <nz-table #basicTable [nzData]="profiles">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>ID</th>
+                <th>Phone</th>
+                <th>Gender</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let profile of profiles">
+                <td>{{ profile.firstName }}</td>
+                <td>{{ profile.lastName }}</td>
+                <td>{{ profile.address }}</td>
+                <td>{{ profile._id }}</td>
+                <td>
+                    {{ profile.phoneNumberPrefix }}-{{ profile.phoneNumber }}
+                </td>
+                <td>{{ profile.gender }}</td>
+                <td>
+                    <span nz-tooltip nzTooltipTitle="click to change role"
+                        ><a (click)="showModal(profile._id, profile.role)">{{
+                            profile.role
+                        }}</a></span
+                    >
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+
+    <nz-modal
+        [(nzVisible)]="isVisible"
+        nzTitle="The first Modal"
+        (nzOnCancel)="handleCancel()"
+        (nzOnOk)="handleOk()"
+        nzOkText="OK"
+        nzCancelText="Cancel"
+    >
+        <nz-radio-group
+            [(ngModel)]="radioValue"
+            (ngModelChange)="handleEvent($event)"
+        >
+            <label nz-radio-button nzValue="user">USER</label>
+            <label nz-radio-button nzValue="admin">ADMIN</label>
+            <label nz-radio-button nzValue="content-manager"
+                >CONTENT-MANAGER</label
+            >
+        </nz-radio-group>
+    </nz-modal>
+</ng-container>

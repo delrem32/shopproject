@@ -15,6 +15,7 @@ export interface UserProfile {
     address?: string;
     agree?: boolean;
     cart?: string[];
+    role?: string;
 }
 
 @Injectable({
@@ -56,7 +57,7 @@ export class ProfileService {
     }
 
     clearProfile() {
-        this.profileSubject.next(null);
+        this.profileSubject.next(undefined);
     }
 
     setProfile(profile: any) {
@@ -75,13 +76,19 @@ export class ProfileService {
             .pipe(share());
     }
 
-    patchProfile(params: { privacy: any }) {
+    getAllProfiles(): Observable<[UserProfile]> {
         return this.http
-            .patch(
-                `http://localhost:5000/profiles/${
-                    this.profileSubject.getValue()._id
-                }`,
-                params
+            .post<any>("http://localhost:5000/profiles/q", null)
+            .pipe(share());
+    }
+
+    patchProfile(id, payload) {
+        return this.http
+            .put(`http://localhost:5000/profiles/${id}`, payload)
+            .pipe(
+                tap((profileRaw: UserProfile) =>
+                    this.profileSubject.next(profileRaw)
+                )
             )
             .pipe(share());
     }
