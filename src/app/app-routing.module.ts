@@ -6,6 +6,7 @@ import { UserRegistrationComponent } from "./user-registration/user-registration
 import { UserProfileComponent } from "./user-profile/user-profile.component";
 import { CardDetailsComponent } from "./card-details/card-details.component";
 import { IsAuthorizedGuard } from "./is-authorized.guard";
+import { IsAdminGuard } from "./is-admin.guard";
 
 const routes: Routes = [
     { path: "", redirectTo: "home", pathMatch: "full" },
@@ -18,12 +19,13 @@ const routes: Routes = [
             import("./admin-panel/admin-panel.module").then(
                 (m) => m.AdminPanelModule
             ),
+        canActivate: [IsAdminGuard, IsAuthorizedGuard],
     },
     {
         path: "order",
         loadChildren: () =>
             import("./order/order.module").then((order) => order.OrderModule),
-        canActivate: [IsAuthorizedGuard],
+        canActivate: [IsAuthorizedGuard, IsAdminGuard],
     },
     {
         path: "cart",

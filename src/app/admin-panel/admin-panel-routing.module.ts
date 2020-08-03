@@ -3,6 +3,8 @@ import { Routes, RouterModule } from "@angular/router";
 import { OrderManagementComponent } from "./order-management/order-management.component";
 import { UserManagementComponent } from "./user-management/user-management.component";
 import { RoleManagementComponent } from "./role-management/role-management.component";
+import { IsAdminGuard } from "../is-admin.guard";
+import { IsAuthorizedGuard } from "../is-authorized.guard";
 
 const routes: Routes = [
     {
@@ -11,13 +13,38 @@ const routes: Routes = [
             import("./card-management/card-management.module").then(
                 (m) => m.CardManagementModule
             ),
+        canActivate: [IsAdminGuard, IsAuthorizedGuard],
     },
-    { path: "order-management", component: OrderManagementComponent },
-    { path: "order-management/:id", component: OrderManagementComponent },
-    { path: "user-management", component: UserManagementComponent },
-    { path: "user-management/:id", component: UserManagementComponent },
-    { path: "role-management", component: RoleManagementComponent },
-    { path: "role-management/:id", component: RoleManagementComponent },
+    {
+        path: "order-management",
+        component: OrderManagementComponent,
+        canActivate: [IsAdminGuard, IsAuthorizedGuard],
+    },
+    {
+        path: "order-management/:id",
+        component: OrderManagementComponent,
+        canActivate: [IsAdminGuard, IsAuthorizedGuard],
+    },
+    {
+        path: "user-management",
+        component: UserManagementComponent,
+        canActivate: [IsAdminGuard, IsAuthorizedGuard],
+    },
+    {
+        path: "user-management/:id",
+        component: UserManagementComponent,
+        canActivate: [IsAdminGuard, IsAuthorizedGuard],
+    },
+    {
+        path: "role-management",
+        component: RoleManagementComponent,
+        canActivate: [IsAdminGuard, IsAuthorizedGuard],
+    },
+    {
+        path: "role-management/:id",
+        component: RoleManagementComponent,
+        canActivate: [IsAdminGuard, IsAuthorizedGuard],
+    },
 ];
 
 @NgModule({

@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 import { AdminPanelRoutingModule } from "./admin-panel-routing.module";
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { NzAffixModule } from "ng-zorro-antd";
 import { OrderManagementComponent } from "./order-management/order-management.component";
 import { UserManagementComponent } from "./user-management/user-management.component";
@@ -24,6 +24,7 @@ import { SharedModule } from "../shared/shared.module";
         NzAffixModule,
         AntModule,
         SharedModule,
+        FormsModule,
     ],
 })
 export class AdminPanelModule {}
