@@ -4,6 +4,7 @@
             *ngFor="let card of cards"
             [card]="card"
             [editable]="true"
+            (onDeleteEvent)="onDeleteEvent($event)"
         ></app-cart-form>
     </ng-container>
     <div *ngIf="arrayCardsLenght === 0 || null || undefined" class="emptyCart">

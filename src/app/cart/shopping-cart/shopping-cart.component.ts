@@ -11,6 +11,7 @@ import {
     startWith,
     take,
     tap,
+    takeUntil,
 } from "rxjs/operators";
 import { CardInterface } from "../../shared/cards/card-interface";
 import { CardServiceService } from "../../card-service.service";
@@ -25,6 +26,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     cards;
     cartLenght;
     refresh$ = new Subject() as Subject<CardInterface>;
+    destroy$ = new Subject<void>();
 
     constructor(
         private orderService: ShoppingCartService,
@@ -44,7 +46,10 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         this.initCart();
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
 
     initCart() {
         // profile$ -> null ??
@@ -72,7 +77,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     deleteOrderFromCart(id: string) {
         return this.orderService
             .deleteOrdersFromCartByPatch({ cart: [id] })
-            .pipe(tap(() => this.refresh$.next()))
-            .subscribe();
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(()=> this.ngOnInit());
     }
 }

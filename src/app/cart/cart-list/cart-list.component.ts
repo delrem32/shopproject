@@ -46,6 +46,10 @@ export class CartListComponent implements OnInit {
         this.deliveryAdress$ = this.profile$.pipe(pluck("address"));
     }
 
+    onDeleteEvent(event) {
+        this.ngOnInit();
+    }
+
     initCart() {
         this.cardsList$ = this.refresh$
             .asObservable()
