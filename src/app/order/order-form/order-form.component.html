@@ -5,6 +5,27 @@
             [editable]="false"
             [card]="card"
         ></app-cart-form>
+        <ng-container *ngIf="admin === true">
+            <button nz-button nzType="primary"
+            style="background-color: goldenrod; border-color: goldenrod;"
+            (click)="onDeliveryStatusChangeEvent('sendet', order[0]._id)"
+            [disabled]="sent">Send</button>
+            <button nz-button nzType="primary" 
+            style="background-color: #52c41a; border-color: #52c41a;"
+            (click)="onStatusChangeEvent('completed', order[0]._id)">Complete</button>
+            <button nz-button nzType="danger"
+            (click)="onStatusChangeEvent('canceled', order[0]._id)">Cancel</button>
+            <button nz-button nzType="primary" (click)="onStatusChangeEvent('active', order[0]._id)" *ngIf="(order[0].status === 'canceled') || (order[0].status === 'completed') ">Reactivate</button>
+            <div>
+                User data:
+                <div>
+                    Name:  {{order[0].delivery_to}}
+                </div>
+                <div>
+                    Address: {{order[0].delivery_address}}
+                </div>
+            </div>
+        </ng-container>
     </nz-collapse-panel>
 </nz-collapse>
 <ng-template #headerTpl>
@@ -41,7 +62,7 @@
                     nz-icon
                     [nzType]="'check-circle'"
                     [nzTheme]="'twotone'"
-                    [nzTwotoneColor]="'#ff0000'"
+                    [nzTwotoneColor]="'#52c41a'"
                 ></i>
             </div>
             <div *ngIf="order[0].status === 'canceled'">
@@ -49,13 +70,17 @@
                     nz-icon
                     [nzType]="'check-circle'"
                     [nzTheme]="'twotone'"
-                    [nzTwotoneColor]="'#52c41a'"
+                    [nzTwotoneColor]="'#ff0000'"
                 ></i>
             </div>
         </div>
-        <div nz-col nzSpan="12">
-            <div nz-row>Nummer: {{ order[0]._id }}</div>
+        <div nz-col nzSpan="6">
+            <div nz-row>Order Nummer: {{ order[0]._id }}</div>
             <div nz-row>Date of Order: {{ order[0].order_date | date }}</div>
+        </div>
+        <div nz-col nzSpan="6">
+            <div nz-row>Delivery Status: {{order[0].delivery_status}}</div>
+            <div nz-row>Your Trackcode: <a>{{order[0].delivery_track}}</a></div>
         </div>
         <div nz-col nzSpan="6">
             <p>{{ order[0].sum | currency: "EUR" }}</p>

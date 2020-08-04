@@ -28,4 +28,7 @@ export class OrderService {
             delivery_to: id,
         });
     }
+    updateOrder(orderId: string, payload): Observable<OrderInterface> {
+        return this.http.put<OrderInterface>(`${this.apiURL}/${orderId}`, payload);
+    }
 }

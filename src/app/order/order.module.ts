@@ -29,5 +29,6 @@ import { CartModule } from "../cart/cart.module";
         CartModule,
         NzTabsModule,
     ],
+    exports: [OrderFormComponent]
 })
 export class OrderModule {}

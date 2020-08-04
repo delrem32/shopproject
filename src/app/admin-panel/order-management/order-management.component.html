@@ -1,1 +1,32 @@
-<p>order management page</p>
+<nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+    <nz-tab [nzTitle]="'Active Orders'">
+        <app-order-form
+            *ngFor="let order of activeOrdersList$ | async"
+            [order]="order"
+            [admin]="true"
+            (statusEvent)="statusManager($event)"
+            (deliveryStatusEvent)="deliveryStatusManager($event)"
+        >
+        </app-order-form>
+    </nz-tab>
+    <nz-tab [nzTitle]="'Completed'">
+        <app-order-form
+            *ngFor="let order of completedOrdersList$ | async"
+            [order]="order"
+            [admin]="true"
+            (statusEvent)="statusManager($event)"
+            (deliveryStatusEvent)="deliveryStatusManager($event)"
+        >
+        </app-order-form>
+    </nz-tab>
+    <nz-tab [nzTitle]="'Canceled'">
+        <app-order-form
+            *ngFor="let order of canceledOrdersList$ | async"
+            [order]="order"
+            [admin]="true"
+            (statusEvent)="statusManager($event)"
+            (deliveryStatusEvent)="deliveryStatusManager($event)"
+        >
+        </app-order-form>
+    </nz-tab>
+</nz-tabset>

@@ -10,6 +10,7 @@ import { RoleManagementComponent } from "./role-management/role-management.compo
 import { AntModule } from "../shared/ant/ant.module";
 import { ManageImageComponent } from "../shared/manage-image/manage-image.component";
 import { SharedModule } from "../shared/shared.module";
+import { OrderModule } from "../order/order.module";
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { SharedModule } from "../shared/shared.module";
         AntModule,
         SharedModule,
         FormsModule,
+        OrderModule
     ],
 })
 export class AdminPanelModule {}
