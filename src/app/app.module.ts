@@ -38,8 +38,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { JwtInterceptor } from "./jwt.interceptor";
 import { UserRegistrationComponent } from "./user-registration/user-registration.component";
 import { UserProfileComponent } from "./user-profile/user-profile.component";
-import { ShoppingCartComponent } from "./cart/shopping-cart/shopping-cart.component";
 import { SharedModule } from "./shared/shared.module";
+import { CartModule } from "./cart/cart.module";
 
 @NgModule({
     declarations: [
@@ -52,8 +52,7 @@ import { SharedModule } from "./shared/shared.module";
         CardItemComponent,
         UserLoginComponent,
         UserRegistrationComponent,
-        UserProfileComponent,
-        ShoppingCartComponent,
+        UserProfileComponent
     ],
     imports: [
         BrowserModule,
@@ -64,6 +63,7 @@ import { SharedModule } from "./shared/shared.module";
         BrowserAnimationsModule,
         ReactiveFormsModule,
         SharedModule,
+        CartModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

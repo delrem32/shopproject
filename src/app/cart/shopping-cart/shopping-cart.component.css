@@ -5,3 +5,8 @@
     white-space: normal;
     overflow-wrap: break-word;
 }
+button {
+    margin: auto;
+    min-height: 50px;
+    min-width: 150px;
+}

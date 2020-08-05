@@ -1,30 +1,40 @@
 <a
-    nz-dropdown
-    [nzDropdownMenu]="menu"
-    nzPlacement="bottomRight"
-    nzTrigger="click"
     style="float: right; margin: 0px 15px 0px 0px;"
     *ngIf="isLogged()"
+    (click)="open()"
 >
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-        <ng-container *ngIf="cardsList$ | async as cards">
-            <ul nz-menu *ngFor="let card of cards">
-                <li nz-menu-item>
-                    <i nz-icon nzType="shopping-cart"></i>
-                    {{ card.name }}
-                    <button
-                        nz-button
-                        nzType="danger"
-                        nzSize="small"
-                        (click)="deleteOrderFromCart(card._id)"
-                    >
-                        X
-                    </button>
-                </li>
-            </ul>
-        </ng-container>
-    </nz-dropdown-menu>
     <nz-badge [nzCount]="cartLenght" [nzOffset]="[10, 15]">
         <i nz-icon nzType="shopping-cart" style="font-size: 30px;"></i>
     </nz-badge>
 </a>
+
+<nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" (nzOnClose)="close()">
+    <nz-row>
+        <button
+            *ngIf="cartLenght > 0"
+            nz-button
+            nzType="primary"
+            (click)="createOrder()"
+            [disabled]="
+                !(deliveryAdress$ | async) ||
+                cartLenght === 0 ||
+                null ||
+                undefined
+            "
+        >
+            Go to Pay
+        </button>
+    </nz-row>
+    <ng-container *ngIf="cardsList$ | async as cards">
+        <app-cart-form
+            *ngFor="let card of cards"
+            [card]="card"
+            [editable]="true"
+            (onDeleteEvent)="onDeleteEvent($event)"
+        ></app-cart-form>
+    </ng-container>
+    <div *ngIf="cartLenght === 0 || null || undefined" class="emptyCart">
+        <nz-empty [nzNotFoundContent]="'Es gibt keinen einzigen Artikel in Ihrem Warenkorb.'"></nz-empty>
+    </div>
+    
+</nz-drawer>

@@ -12,9 +12,12 @@ import {
     take,
     tap,
     takeUntil,
+    switchMap,
 } from "rxjs/operators";
 import { CardInterface } from "../../shared/cards/card-interface";
 import { CardServiceService } from "../../card-service.service";
+import { OrderService } from "../../order.service";
+import { OrderInterface } from "../../shared/orders/order-interface";
 
 @Component({
     selector: "app-shopping-cart",
@@ -27,9 +30,21 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     cartLenght;
     refresh$ = new Subject() as Subject<CardInterface>;
     destroy$ = new Subject<void>();
+    visible = false;
+    data = [];
+    arrayCardsLenght;
+    profile$ = this.profileService.profile$;
+    deliveryAdress$;
+    open(): void {
+        this.visible = true;
+    }
 
+    close(): void {
+        this.visible = false;
+    }
     constructor(
-        private orderService: ShoppingCartService,
+        private orderService: OrderService,
+        private cartService: ShoppingCartService,
         private profileService: ProfileService,
         private cardService: CardServiceService
     ) {}
@@ -44,6 +59,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.initCart();
+        this.deliveryAdress$ = this.profile$.pipe(pluck("address"));
     }
 
     ngOnDestroy(): void {
@@ -52,32 +68,54 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     }
 
     initCart() {
-        // profile$ -> null ??
         this.cardsList$ = this.refresh$
             .asObservable()
             .pipe(startWith(null))
-            .pipe(take(1))
-            .pipe(flatMap(() => this.profileService.profile$))
-            .pipe(pluck("cart"))
             .pipe(
+                take(1),
+                flatMap(() => this.profileService.profile$),
+                pluck("cart"),
                 filter((cart) => {
                     this.cartLenght = cart.length;
                     return cart.length !== 0;
-                })
-            )
-            .pipe(
+                }),
                 flatMap((ids: string[]) =>
                     combineLatest(
-                        ids.map((id) => this.cardService.getSingleCard(id))
+                        ids.map((id) => {
+                            return this.cardService.getSingleCard(id);
+                        })
                     )
-                )
+                ),
+                tap((cards) => console.log(cards.length))
             );
     }
+    createOrder() {
+        this.profile$
+            .pipe(
+                take(1),
+                switchMap((userData) =>
+                    this.orderService.createOrder({
+                        order_date: new Date(),
+                        sum: 50,
+                        cart: userData.cart,
+                        status: "active",
+                        delivery_to: userData._id,
+                        delivery_address: userData.address,
+                        delivery_date: new Date(),
+                        delivery_track: "12313",
+                        delivery_status: "bearbeitung",
+                    })
+                ),
+                tap((orderData: OrderInterface) =>
+                    this.cartService.deleteOrdersFromCartByPatch({
+                        cart: orderData.cart,
+                    })
+                )
+            )
+            .subscribe(() => location.reload());
+    }
 
-    deleteOrderFromCart(id: string) {
-        return this.orderService
-            .deleteOrdersFromCartByPatch({ cart: [id] })
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(()=> this.ngOnInit());
+    onDeleteEvent(event) {
+        this.ngOnInit();
     }
 }
