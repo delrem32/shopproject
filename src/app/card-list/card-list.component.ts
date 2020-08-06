@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { CardInterface } from "../shared/cards/card-interface";
 import { CardServiceService } from "../card-service.service";
-import { filter, map } from "rxjs/operators";
+import { filter, map, share } from "rxjs/operators";
 
 @Component({
     selector: "app-card-list",
@@ -20,6 +20,7 @@ export class CardListComponent implements OnInit {
                 map((cards: CardInterface[]) =>
                     cards.filter((card: CardInterface) => card.quantity > 0)
                 )
-            );
+            )
+            .pipe(share());
     }
 }

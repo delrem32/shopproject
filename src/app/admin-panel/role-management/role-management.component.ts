@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ResponsiveService } from "../../responsive.service";
 
 @Component({
     selector: "app-role-management",
@@ -6,7 +7,10 @@ import { Component, OnInit } from "@angular/core";
     styleUrls: ["./role-management.component.css"],
 })
 export class RoleManagementComponent implements OnInit {
-    constructor() {}
+    mediaController$;
+    constructor(private responsiveService: ResponsiveService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.mediaController$ = this.responsiveService.mediaBreakpoint$;
+    }
 }

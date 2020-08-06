@@ -3,7 +3,7 @@
     *ngIf="isLogged()"
     (click)="open()"
 >
-    <nz-badge [nzCount]="cartLenght" [nzOffset]="[10, 15]">
+    <nz-badge *ngIf="(cardsList$|async)" [nzCount]="badgeCount" [nzOffset]="[10, 15]">
         <i nz-icon nzType="shopping-cart" style="font-size: 30px;"></i>
     </nz-badge>
 </a>
@@ -11,15 +11,12 @@
 <nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right" (nzOnClose)="close()">
     <nz-row>
         <button
-            *ngIf="cartLenght > 0"
+            *ngIf="cardsList$|async as cardsList"
             nz-button
             nzType="primary"
             (click)="createOrder()"
             [disabled]="
-                !(deliveryAdress$ | async) ||
-                cartLenght === 0 ||
-                null ||
-                undefined
+                !(deliveryAdress$ | async)
             "
         >
             Go to Pay
@@ -33,7 +30,7 @@
             (onDeleteEvent)="onDeleteEvent($event)"
         ></app-cart-form>
     </ng-container>
-    <div *ngIf="cartLenght === 0 || null || undefined" class="emptyCart">
+    <div *ngIf="!(cardsList$|async)" class="emptyCart">
         <nz-empty [nzNotFoundContent]="'Es gibt keinen einzigen Artikel in Ihrem Warenkorb.'"></nz-empty>
     </div>
     

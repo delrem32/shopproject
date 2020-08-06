@@ -17,6 +17,7 @@ import {
     scan,
     take,
     reduce,
+    share,
 } from "rxjs/operators";
 import { LoginService } from "../../login.service";
 
